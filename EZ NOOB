@@ -12,8 +12,8 @@ DarkContrast = Color3.fromRGB(14, 14, 14),
 TextColor = Color3.fromRGB(255, 255, 255)
 }
 
--- first page
-local page = venyx:addPage("Main Page", 5012544693)
+--  first page
+local page =venyx:addPage("Main Page", 5012544693)
 local section1 = page:addSection("WalkSpeed")
 local section2 = page:addSection("Nothing")
 
@@ -32,7 +32,7 @@ TextColor = Color3.fromRGB(255, 255, 255)
 }
 
 -- first page
-local page = venyx:addPage("Test", 5012544693)
+local page = venyx:addPage("Main Page", 5012544693)
 local section1 = page:addSection("WalkSpeed")
 local section2 = page:addSection("Nothing")
 
