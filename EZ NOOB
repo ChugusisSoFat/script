@@ -4,17 +4,53 @@ if game.PlaceId == 11542692507 then
     local Tab = Window:NewTab("Main Tab")
     local Section = Tab:NewSection("Auto Farm")
     
+    getgenv().Toggled = false
+
+    Section:NewToggle("Auto Farm", "This Will Farm Aokiji!", function(state)
+        if state then
+            getgenv().autofarm = true
+            while getgenv().autofarm == true do wait()
+                    tweenService = game:GetService("TweenService")
+                    tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Quart)
+                    A = game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart
+                    tween = tweenService:Create(A, tweenInfo, {CFrame = CFrame.new(-406.0546569824219, 5, 940.1435546875)})
+                    tween:Play()
+            end
+        else
+            getgenv().autofarm = false
+        end
+    end)
+
     
-    Section:NewToggle("Auto Click", "This Will Click Automaticly For You!", function(state)
+    Section:NewToggle("Auto Click", "This Will Click Automaticly For You! (Must Enable With Auto Click)", function(state)
         if state then
             getgenv().autoclick = true
             while getgenv().autoclick == true do wait()
-                game:GetService("ReplicatedStorage").Remotes.Server:FireServer({"Hit"})
+                game:GetService'VirtualUser':Button1Down(Vector2. new(1,1))
             end
         else
             getgenv().autoclick = false
         end
     end)
+
+    Section:NewToggle("Auto Buy Egg", "This Will Buy Egg At Spawn :)", function(state)
+        if state then
+            getgenv().autobuyegg = true
+            while getgenv().autobuyegg == true do wait()
+                tweenService = game:GetService("TweenService")
+                tweenInfo = TweenInfo.new(3, Enum.EasingStyle.Quart)
+                A = game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart
+                tween = tweenService:Create(A, tweenInfo, {CFrame = CFrame.new(-455.04058837890625, 0, 757.2879028320312)})
+                tween:Play()
+                wait(3)
+                game:GetService("ReplicatedStorage").Remotes.Server:FireServer({"BuyHeroes","Pyecy Village"})
+            end
+        else
+            getgenv().autobuyegg = false
+        end
+    end)
+
+
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
 end
