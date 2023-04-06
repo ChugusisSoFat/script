@@ -50,7 +50,106 @@ if game.PlaceId == 11542692507 then
         end
     end)
 
+elseif game.PlaceId == 3956818381 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("EZ NOOB HUB", "DarkTheme")
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Auto Farm")
 
+Section:NewToggle("Auto Click", "This will click automaticly fo you!", function(state)
+    if state then
+        getgenv().swing = true
+        while getgenv().swing == true do wait()
+        game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("swingKatana")
+        end
+        else
+        getgenv().swing = false
+    end
+end)
+
+Section:NewToggle("Auto Sell", "This will teleport you to sell", function(state)
+    if state then
+        getgenv().tp1 = true
+        while getgenv().tp1 == true do wait(1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(73.85891723632812, 2.999999523162842, -46.56789779663086)
+        wait(4)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(73.85891723632812, 15, -46.56789779663086)
+        end
+    else
+        getgenv().tp1 = false
+    end
+end)
+
+
+Section:NewToggle("Auto Buy Sword And Belts", "This will buy swords and belts automaticly!", function(state)
+    if state then
+        getgenv().autobuy = true 
+        while getgenv().autobuy == true do wait()
+            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("buyAllSwords","Blazing Vortex Island")
+            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("buyAllBelts","Blazing Vortex Island")
+         end
+    else
+        getgenv().autobuy = false
+    end
+end)
+
+local Section = Tab:NewSection("Island TP")
+
+Section:NewDropdown("Teleport Island", "Will teleport you to selected Island!", {"Island 1", "Island 2", "Island 3", "Island 4", "Island 5", "Island 6", "Island 7", 
+"Island 8", "Island 9", "Island 10", "Island 11", "Island 12" ,"Island 13", "Island 14", "Island 15", "Island 16", "Island 17", "Island 18", "Island 19", "Island 20", "Island 21"}, function(currentOption)
+    if currentOption == "Island 1" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(26.9946918, 781.996155, -114.43486, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    elseif currentOption == "Island 2" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(247.097946, 2032.19617, 347.208893, 0.819155693, 0, 0.573571265, 0, 1, 0, -0.573571265, 0, 0.819155693)
+    elseif currentOption == "Island 3" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(162.742065, 4065.7981, 13.3782578, -0.819156051, 0, 0.573571265, 0, 1, 0, -0.573571265, 0, -0.819156051)
+    elseif currentOption == "Island 4" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 5675.29688, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 5" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 9303.29688, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 6" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 13698.1504, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 7" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 17704.4473, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 8" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 24088.1406, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 9" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 28274.4121, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 10" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 33225.1016, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 11" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 39335.6953, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 12" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 46028.6797, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 13" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 52625.8867, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 14" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 59612.8047, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 15" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 66687.2969, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 16" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 70289.2891, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 17" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 74460.9844, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 18" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 79765.1172, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 19" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 83217.1172, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 20" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 87069.2031, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    elseif currentOption == "Island 21" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 91264.2031, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
+    end
+end)
+
+
+local Tab = Window:NewTab("UI")
+
+local Section = Tab:NewSection("UI Setting")
+
+Section:NewKeybind("Press LeftControl To Toggle UI", "Press the key to turn on/off ui", Enum.KeyCode.LeftControl, function()
+	Library:ToggleUI()
+end)
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
 end
