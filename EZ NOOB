@@ -150,6 +150,154 @@ local Section = Tab:NewSection("UI Setting")
 Section:NewKeybind("Press LeftControl To Toggle UI", "Press the key to turn on/off ui", Enum.KeyCode.LeftControl, function()
 	Library:ToggleUI()
 end)
+elseif game.PlaceId == 10232731562 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("EZ NOOB HUB", "Ocean")
+local Tab = Window:NewTab("Main Tab")
+local Section = Tab:NewSection("Auto Farm")
+
+local equiplist = {}
+local equip = nil
+
+-- Auto Equip
+
+for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+    table.insert(equiplist,v.Name)
+end
+
+-- Function Auto Quest
+
+function autoquest()
+    if game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.visible == false then
+        if game:GetService("Players").LocalPlayer.Data.Level.Value <= 10 then
+            game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.Handler.RemoteEvent:FireServer()
+            game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 1})
+        elseif game:GetService("Players").LocalPlayer.Data.Level.Value <= 20 then
+            game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.Handler.RemoteEvent:FireServer()
+            game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 3})
+        end
+    end
+end
+
+-- Function Auto Farm
+
+function mon1()
+    while getgenv().lvlfarm == true do wait()
+        pcall(function()
+            for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do 
+                if v.Name == "Thief" then 
+                    if v.Humanoid.Health >= 0 then 
+                        repeat wait()
+                            autoquest()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,1,4)
+                        until getgenv().lvlfarm == false or v.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end)
+    end
+end
+
+function mon2()
+    while getgenv().lvlfarm == true do wait()
+            pcall(function()
+                for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do 
+                    if v.Name == "Buff Thief" then 
+                        if v.Humanoid.Health >= 0 then 
+                            repeat wait()
+                            autoquest()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,1,4)
+                        until getgenv().lvlfarm == false or v.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end)
+    end
+end
+
+
+-- Toggle Section
+
+Section:NewToggle("Auto Farm", "Will Farm level Automaticly", function(state)
+    if state then
+            getgenv().lvlfarm = state
+                if game:GetService("Players").LocalPlayer.Data.Level.Value <= 10 then
+                mon1()
+                elseif game:GetService("Players").LocalPlayer.Data.Level.Value <= 20 then
+                mon2()
+            end
+        else
+        getgenv().lvlfarm = false
+    end
+end)
+
+Section:NewToggle("Auto Click (Open With Auto Farm)", "Will Click Automaticly", function(state)
+    if state then
+        getgenv().autoclick = state
+            repeat wait()
+                while getgenv().autoclick == true do wait()
+                    pcall(function()
+                        for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do
+                            if v.Name == "IsAPlayer" then
+                            v.Parent.Name = "a"
+                            workspace.World.Live.a.Combat.Server.RemoteEvent:FireServer("M1")
+                            end
+                        end
+                    end)
+                end
+            until getgenv().autoclick == false
+        else
+        getgenv().autoclick = false
+    end
+end)
+
+Section:NewDropdown("Select item", "Select an item you want to auto equip", equiplist, function(currentOption)
+    equip = currentOption
+end)
+
+Section:NewToggle("Auto Equip (Enable With Auto Farm)", "Will Equip A Selected Item", function(state)
+autoequip = state
+end)
+
+spawn(function()
+    while wait() do
+        if autoequip then
+            pcall(function()
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(equip))
+            end)
+        end
+    end
+end)
+
+Section:NewToggle("NoClip (Enable With Auto Farm)", "Enable With Auto Farm", function(state)
+    if state then
+        getgenv().noclip = state
+        repeat wait()
+            game:GetService("RunService").Stepped:Connect(function()
+                if getgenv().noclip == true then wait()
+                    for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        until game.Players.LocalPlayer.Humanoid.Health <= 0
+    else
+        getgenv().noclip = false
+        game:GetService("RunService").Stepped:Connect(function()
+            if getgenv().noclip == true then wait()
+                for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = true
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
 end
