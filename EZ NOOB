@@ -150,6 +150,7 @@ local Section = Tab:NewSection("UI Setting")
 Section:NewKeybind("Press LeftControl To Toggle UI", "Press the key to turn on/off ui", Enum.KeyCode.LeftControl, function()
 	Library:ToggleUI()
 end)
+
 elseif game.PlaceId == 10232731562 then
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("EZ NOOB HUB", "Ocean")
