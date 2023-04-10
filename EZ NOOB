@@ -120,7 +120,7 @@ function autofarm()
                     if v.Name == mob then
                         if v.Humanoid.Health >= 0 then
                             repeat wait()
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,6,slider)
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,5,slider)
                             until getgenv().autofarm == false or v.Humanoid.Health <= 0
                         end
                     end
@@ -235,7 +235,7 @@ section1:addDropdown("Select Boss", {"Buff Thief Lvl. 10" ,"Buff Monkey Lvl. 60"
     end
 end)
 
-section1:addSlider("Auto Farm Distance", 8, 0, 20, function(value)
+section1:addSlider("Auto Farm Distance", 9, 0, 20, function(value)
     slider = value
 end)
 
