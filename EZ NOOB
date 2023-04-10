@@ -120,7 +120,7 @@ if game.PlaceId == 10232731562 then
                         if v.Name == mob then
                             if v.Humanoid.Health >= 0 then
                                 repeat wait()
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,5,slider)
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,5,slider or 9)
                                 until getgenv().autofarm == false or v.Humanoid.Health <= 0
                             end
                         end
@@ -234,11 +234,11 @@ if game.PlaceId == 10232731562 then
             mob = "Morman"
         end
     end)
-    
+
+
     section1:addSlider("Auto Farm Distance", 9, 0, 20, function(value)
-        slider = value
+            slider = value
     end)
-    
     
     section2:addToggle("Auto Equip", nil, function(value)
         autoequip = value
