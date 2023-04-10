@@ -1,303 +1,368 @@
-if game.PlaceId == 11542692507 then
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("EZ NOOB HUB", "DarkTheme")
-    local Tab = Window:NewTab("Main Tab")
-    local Section = Tab:NewSection("Auto Farm")
+if game.PlaceId == 10232731562 then
     
-    getgenv().Toggled = false
-
-    Section:NewToggle("Auto Farm", "This Will Farm Aokiji!", function(state)
-        if state then
-            getgenv().autofarm = true
-            while getgenv().autofarm == true do wait()
-                    tweenService = game:GetService("TweenService")
-                    tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Quart)
-                    A = game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart
-                    tween = tweenService:Create(A, tweenInfo, {CFrame = CFrame.new(-406.0546569824219, 5, 940.1435546875)})
-                    tween:Play()
+    local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()
+    local venyx = library.new("EZ NOOB HUB", 5013109572)
+    
+    -- Themes
+    
+    local themes = {
+    Background = Color3.fromRGB(33, 41, 61),
+    Glow = Color3.fromRGB(255, 255, 255),
+    Accent = Color3.fromRGB(33, 41, 61),
+    LightContrast = Color3.fromRGB(30, 43, 74),
+    DarkContrast = Color3.fromRGB(33, 41, 61),  
+    TextColor = Color3.fromRGB(255, 255, 255)
+    }
+    
+    -- Anti AFK
+    
+    spawn(function()
+        local function antiafk()
+            plr.Idled:connect(function()
+                game:service("VirtualUser"):CaptureController()
+                game:service("VirtualUser"):ClickButton2(Vector2.new())
+            end)
+            warn("Anti AFK Enabled")
+         end
+    end)
+    
+    
+    -- function check level
+    
+    getgenv().mylvl = game:GetService("Players").LocalPlayer.Data.Level.Value
+    
+    
+    -- function noclip
+    
+     function noclips()
+        spawn(function()
+            if getgenv().autofarm == true then
+                game:GetService("RunService").Stepped:Connect(function()
+                    if getgenv().autofarm == true then
+                        pcall(function()
+                            for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+                                    if v:IsA("BasePart") then
+                                    v.CanCollide = false
+                                end
+                            end
+                        end)
+                    elseif getgenv().autofarm == false then              
+                            for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+                                if v:IsA("BasePart") then
+                                    v.CanCollide = true
+                            end
+                        end
+                    end
+                end)
             end
-        else
+        end)
+    end
+    
+    -- Function Auto Quest
+    
+    function autoquest()
+        spawn(function()
+            while getgenv().autofarm == true do wait()
+                pcall(function()
+                    if game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.Visible == false then
+                        if mob == "Thief" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 1})
+                        elseif mob == "Buff Thief" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 3})
+                        elseif mob == "Desert Thief" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 2})
+                        elseif mob == "Desert Swordsman" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 4})
+                        elseif mob == "Monkey" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 5})
+                        elseif mob == "Buff Monkey" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 6})
+                        elseif mob == "Blizzard bandit" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 7})
+                        elseif mob == "Yeti" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 8})
+                        elseif mob == "Mink" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 9})
+                        elseif mob == "Pro Mink" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 10})
+                        elseif mob == "Pirate" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 11})
+                        elseif mob == "Pro Pirate" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 12})
+                        elseif mob == "Sharkman Inhabitant" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 13})
+                        elseif mob == "Pro Sharkman" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 14})
+                        elseif mob == "Arshort Boss" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 15})
+                        elseif mob == "Nob Marine" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 16})
+                        elseif mob == "Marine Swordsman" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 17})
+                        elseif mob == "Pro Marine" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 18})
+                        elseif mob == "Morman" then
+                        game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 21})
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+    
+    -- Function Auto Farm
+    
+    function autofarm()
+        spawn(function()
+            while getgenv().autofarm == true do wait()  
+                pcall(function()
+                    for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do
+                        if v.Name == mob then
+                            if v.Humanoid.Health >= 0 then
+                                repeat wait()
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,6,8)
+                                until getgenv().autofarm == false or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    end 
+    
+    -- function autoclick
+    
+    function click()
+        spawn(function()        
+            while getgenv().autofarm == true do wait(0.5)
+            pcall(function()
+                local virtual_input_manager = game:GetService("VirtualInputManager")
+                local x, y = 0, 0 
+                virtual_input_manager:SendMouseButtonEvent(x, y, 0, false, game, 0)
+                virtual_input_manager:SendMouseButtonEvent(x, y, 0, true, game, 0)
+                end)
+            end
+        end)
+    end
+    
+    -- Auto Equip
+    
+    equiplist = {}
+    equip = nil
+    
+    spawn(function()
+        for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+            if v.Name ~= "GuiHandler" then
+                table.insert(equiplist, v.Name)
+            end
+        end
+    end)
+    
+    spawn(function()
+        while wait() do
+            if autoequip then
+                    pcall(function()
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(equip))
+                end)
+            end
+        end
+    end)
+    
+    -- Main
+    
+    local Main = venyx:addPage("Main", 5012544693)
+    local section1 = Main:addSection("Auto Farm")
+    local section2 = Main:addSection("Auto Equip")
+    local section3 = Main:addSection("Auto Stats")
+    
+    section1:addToggle("Auto Farm", nil, function(value)
+            if value then
+            getgenv().autofarm = true
+            autofarm()
+            autoquest()
+            click()
+            noclips()
+            else
             getgenv().autofarm = false
         end
     end)
-
     
-    Section:NewToggle("Auto Click", "This Will Click Automaticly For You! (Must Enable With Auto Click)", function(state)
-        if state then
-            getgenv().autoclick = true
-            while getgenv().autoclick == true do wait()
-                game:GetService'VirtualUser':Button1Down(Vector2. new(1,1))
-            end
-        else
-            getgenv().autoclick = false
+    section1:addDropdown("Select Mob", {"Thief Lvl. 1", "Desert Thief Lvl. 20", "Desert Swordsman Lvl. 30", "Monkey Lvl. 50",
+    "Blizzard Bandit Lvl. 75", "Yeti Lvl. 90", "Mink Lvl. 110", "Pro Mink Lvl. 150", "Pirate Lvl. 200", "Pro Pirate Lvl. 250",
+    "Sharkman Inhabitant Lvl. 300", "Pro Sharkman Lvl. 325", "Marine Swordsman Lvl. 350", "Nob Marine Lvl. 375", "Pro Marine Lvl. 400"}, function(text)
+        if text == "Thief Lvl. 1" then
+            mob = "Thief"
+        elseif text == "Desert Thief Lvl. 20" then
+            mob = "Desert Thief"
+        elseif text == "Desert Swordsman Lvl. 30" then
+            mob = "Desert Swordsman"
+        elseif text == "Monkey Lvl. 50" then
+            mob = "Monkey"
+        elseif text == "Blizzard Bandit Lvl. 75" then
+            mob = "Blizzard bandit"
+        elseif text == "Yeti Lvl. 90" then
+            mob = "Yeti"
+        elseif text == "Mink Lvl. 110" then
+            mob = "Mink"
+        elseif text == "Pro Mink Lvl. 150" then
+            mob = "Pro Mink"
+        elseif text == "Pirate Lvl. 200" then
+            mob = "Pirate"
+        elseif text == "Pro Pirate Lvl. 250" then
+            mob = "Pro Pirate"
+        elseif text == "Sharkman Inhabitant Lvl. 300" then
+            mob = "Sharkman Inhabitant"
+        elseif text == "Pro Sharkman Lvl. 325" then
+            mob = "Pro Sharkman"
+        elseif text == "Marine Swordsman Lvl. 350" then
+            mob = "Marine Swordsman"
+        elseif text == "Nob Marine Lvl. 375" then
+            mob = "Nob Marine"
+        elseif text == "Pro Marine Lvl. 400" then
+            mob = "Pro Marine"
         end
     end)
-
-    Section:NewToggle("Auto Buy Egg", "This Will Buy Egg At Spawn :)", function(state)
-        if state then
-            getgenv().autobuyegg = true
-            while getgenv().autobuyegg == true do wait()
-                tweenService = game:GetService("TweenService")
-                tweenInfo = TweenInfo.new(3, Enum.EasingStyle.Quart)
-                A = game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart
-                tween = tweenService:Create(A, tweenInfo, {CFrame = CFrame.new(-455.04058837890625, 0, 757.2879028320312)})
-                tween:Play()
-                wait(3)
-                game:GetService("ReplicatedStorage").Remotes.Server:FireServer({"BuyHeroes","Pyecy Village"})
-            end
-        else
-            getgenv().autobuyegg = false
+    
+    section1:addDropdown("Select Boss", {"Buff Thief Lvl. 10" ,"Buff Monkey Lvl. 60", "Arshort Boss Lvl. 350","Morman Lvl. 425"}, function(text)
+        if text == "Buff Thief Lvl. 10" then
+            mob = "Buff Thief"
+        elseif text == "Buff Monkey Lvl. 60" then
+            mob = "Buff Monkey"
+        elseif text == "Arshort Boss Lvl. 350" then
+            mob = "Arshort Boss"
+        elseif text == "Morman Lvl. 425" then
+            mob = "Morman"
         end
     end)
-
-elseif game.PlaceId == 3956818381 then
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("EZ NOOB HUB", "DarkTheme")
-local Tab = Window:NewTab("Main")
-local Section = Tab:NewSection("Auto Farm")
-
-Section:NewToggle("Auto Click", "This will click automaticly fo you!", function(state)
-    if state then
-        getgenv().swing = true
-        while getgenv().swing == true do wait()
-        game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("swingKatana")
-        end
-        else
-        getgenv().swing = false
-    end
-end)
-
-Section:NewToggle("Auto Sell", "This will teleport you to sell", function(state)
-    if state then
-        getgenv().tp1 = true
-        while getgenv().tp1 == true do wait(1)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(73.85891723632812, 2.999999523162842, -46.56789779663086)
-        wait(4)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(73.85891723632812, 15, -46.56789779663086)
-        end
-    else
-        getgenv().tp1 = false
-    end
-end)
-
-
-Section:NewToggle("Auto Buy Sword And Belts", "This will buy swords and belts automaticly!", function(state)
-    if state then
-        getgenv().autobuy = true 
-        while getgenv().autobuy == true do wait()
-            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("buyAllSwords","Blazing Vortex Island")
-            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer("buyAllBelts","Blazing Vortex Island")
-         end
-    else
-        getgenv().autobuy = false
-    end
-end)
-
-local Section = Tab:NewSection("Island TP")
-
-Section:NewDropdown("Teleport Island", "Will teleport you to selected Island!", {"Island 1", "Island 2", "Island 3", "Island 4", "Island 5", "Island 6", "Island 7", 
-"Island 8", "Island 9", "Island 10", "Island 11", "Island 12" ,"Island 13", "Island 14", "Island 15", "Island 16", "Island 17", "Island 18", "Island 19", "Island 20", "Island 21"}, function(currentOption)
-    if currentOption == "Island 1" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(26.9946918, 781.996155, -114.43486, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-    elseif currentOption == "Island 2" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(247.097946, 2032.19617, 347.208893, 0.819155693, 0, 0.573571265, 0, 1, 0, -0.573571265, 0, 0.819155693)
-    elseif currentOption == "Island 3" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(162.742065, 4065.7981, 13.3782578, -0.819156051, 0, 0.573571265, 0, 1, 0, -0.573571265, 0, -0.819156051)
-    elseif currentOption == "Island 4" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 5675.29688, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 5" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 9303.29688, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 6" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 13698.1504, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 7" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 17704.4473, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 8" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(199.768478, 24088.1406, 12.9378996, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 9" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 28274.4121, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 10" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 33225.1016, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 11" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 39335.6953, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 12" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 46028.6797, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 13" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 52625.8867, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 14" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 59612.8047, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 15" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 66687.2969, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 16" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 70289.2891, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 17" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 74460.9844, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 18" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 79765.1172, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 19" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 83217.1172, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 20" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 87069.2031, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    elseif currentOption == "Island 21" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(197.86853, 91264.2031, 7.03808689, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998369, 0, -0.939700961)
-    end
-end)
-
-
-local Tab = Window:NewTab("UI")
-
-local Section = Tab:NewSection("UI Setting")
-
-Section:NewKeybind("Press LeftControl To Toggle UI", "Press the key to turn on/off ui", Enum.KeyCode.LeftControl, function()
-	Library:ToggleUI()
-end)
-
-elseif game.PlaceId == 10232731562 then
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("EZ NOOB HUB", "Ocean")
-local Tab = Window:NewTab("Main Tab")
-local Section = Tab:NewSection("Auto Farm")
-
-local equiplist = {}
-local equip = nil
-
--- Auto Equip
-
-for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-    table.insert(equiplist,v.Name)
-end
-
--- Function Auto Quest
-
-function autoquest()
-    if game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.visible == false then
-        if game:GetService("Players").LocalPlayer.Data.Level.Value <= 10 then
-            game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.Handler.RemoteEvent:FireServer()
-            game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 1})
-        elseif game:GetService("Players").LocalPlayer.Data.Level.Value <= 20 then
-            game:GetService("Players").LocalPlayer.PlayerGui.MainGui.QuestBar.Handler.RemoteEvent:FireServer()
-            game:GetService("Players").LocalPlayer.PlayerGui.DialougeGui.DialogModule.Sending:FireServer({["Key"] = "GetQuest",["QuestID"] = 3})
-        end
-    end
-end
-
--- Function Auto Farm
-
-function mon1()
-    while getgenv().lvlfarm == true do wait()
-        pcall(function()
-            for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do 
-                if v.Name == "Thief" then 
-                    if v.Humanoid.Health >= 0 then 
-                        repeat wait()
-                            autoquest()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,1,4)
-                        until getgenv().lvlfarm == false or v.Humanoid.Health <= 0
-                    end
-                end
+    
+    
+    section2:addToggle("Auto Equip", nil, function(value)
+        autoequip = value
+    end)
+    
+    
+    section2:addDropdown("Select Item", equiplist, function(text)
+        equip = text
+    end)
+    
+    section2:addButton("Refresh Item", function()
+        table.clear(equiplist)
+        for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+            if v.Name ~= "GuiHandler" then
+                table.insert(equiplist, v.Name)
             end
-        end)
-    end
-end
-
-function mon2()
-    while getgenv().lvlfarm == true do wait()
-            pcall(function()
-                for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do 
-                    if v.Name == "Buff Thief" then 
-                        if v.Humanoid.Health >= 0 then 
-                            repeat wait()
-                            autoquest()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,1,4)
-                        until getgenv().lvlfarm == false or v.Humanoid.Health <= 0
-                    end
-                end
-            end
-        end)
-    end
-end
-
-
--- Toggle Section
-
-Section:NewToggle("Auto Farm", "Will Farm level Automaticly", function(state)
-    if state then
-            getgenv().lvlfarm = state
-                if game:GetService("Players").LocalPlayer.Data.Level.Value <= 10 then
-                mon1()
-                elseif game:GetService("Players").LocalPlayer.Data.Level.Value <= 20 then
-                mon2()
+        end
+    end)
+    
+    
+    section3:addDropdown("Select Stats", {"Strength", "Defense", "Stamina", "Devil Fruit", "Weapon", "Gun"}, function(text)
+        getgenv().selectstats = text
+        if getgenv().selectstats == "Strength" then
+             stats = "Combat"
+        elseif getgenv().selectstats == "Defense" then
+             stats = "Defense"
+        elseif getgenv().selectstats == "Stamina" then
+             stats = "Stamina"
+        elseif getgenv().selectstats == "Devil Fruit" then
+             stats = "DevilFruit"
+        elseif getgenv().selectstats == "Weapon" then
+             stats = "Weapon"
+        elseif getgenv().selectstats == "Gun" then
+             stats = "Gun"
+        end
+    end)
+    
+    section3:addToggle("Auto Add Stats", nil, function(value)
+        if value then
+            getgenv().addstats = value
+            while  getgenv().addstats == true do wait(1)
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.StatsRemote:FireServer(stats,1)
+                end)
             end
         else
-        getgenv().lvlfarm = false
-    end
-end)
-
-Section:NewToggle("Auto Click (Open With Auto Farm)", "Will Click Automaticly", function(state)
-    if state then
-        getgenv().autoclick = state
-            repeat wait()
-                while getgenv().autoclick == true do wait()
-                    pcall(function()
-                        for i,v in pairs(game:GetService("Workspace").World.Live:GetDescendants()) do
-                            if v.Name == "IsAPlayer" then
-                            v.Parent.Name = "a"
-                            workspace.World.Live.a.Combat.Server.RemoteEvent:FireServer("M1")
-                            end
-                        end
-                    end)
-                end
-            until getgenv().autoclick == false
-        else
-        getgenv().autoclick = false
-    end
-end)
-
-Section:NewDropdown("Select item", "Select an item you want to auto equip", equiplist, function(currentOption)
-    equip = currentOption
-end)
-
-Section:NewToggle("Auto Equip (Enable With Auto Farm)", "Will Equip A Selected Item", function(state)
-autoequip = state
-end)
-
-spawn(function()
-    while wait() do
-        if autoequip then
-            pcall(function()
-                game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(equip))
-            end)
+            getgenv().addstats = false
         end
-    end
-end)
-
-Section:NewToggle("NoClip (Enable With Auto Farm)", "Enable With Auto Farm", function(state)
-    if state then
-        getgenv().noclip = state
-        repeat wait()
-            game:GetService("RunService").Stepped:Connect(function()
-                if getgenv().noclip == true then wait()
-                    for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
-                end
-            end)
-        until game.Players.LocalPlayer.Humanoid.Health <= 0
-    else
-        getgenv().noclip = false
-        game:GetService("RunService").Stepped:Connect(function()
-            if getgenv().noclip == true then wait()
-                for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = true
-                    end
-                end
+    end)
+    
+    -- Misc
+    
+    local Misc = venyx:addPage("Misc", 5012544693)
+    local section4 = Misc:addSection("Fruits OP")
+    local section5 = Misc:addSection("Server")
+    local section6 = Misc:addSection("FPS Boost")
+    
+    section4:addButton("Teleport To Natural Spawn Fruits", function()
+        for i,v in pairs(game:GetService("Workspace").DFSpawns:GetDescendants())do
+            if v.Name == "Handle" then
+                v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                v.Anchored = false
             end
+        end  
+    end)
+    
+    section4:addButton("Bring Dropped Fruits", function()
+        for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+            if v.ClassName == "Tool" then
+                v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end)
+    
+    section5:addButton("Server Hop", function()
+        local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/10232731562/servers/Public?sortOrder=Asc&limit=100"))
+        for i,v in pairs(Servers.data) do
+            if v.playing ~= v.maxPlayers then
+                game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
+            end
+        end
+    end)
+    
+    
+    section5:addButton("Rejoin Server", function()
+        game:GetService('TeleportService'):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end)
+    
+    section6:addButton("FPS Booster", function()
+        for i,v in next, workspace:GetDescendants() do
+            if v:IsA("BasePart") then
+                v.Material = Enum.Material.SmoothPlastic
+            end
+        end
+    end)
+    
+    section6:addToggle("Disable 3DRendering", nil, function(value)
+        if value then
+            getgenv().render = value
+            local RunService = game:GetService("RunService")
+            RunService:Set3dRenderingEnabled(false)
+        else 
+            getgenv().render = false
+            local RunService = game:GetService("RunService")
+            RunService:Set3dRenderingEnabled(true)
+        end
+    end)
+    
+    
+    -- Gui
+    
+    local Theme = venyx:addPage("Gui", 5012544693)
+    local section7 = Theme:addSection("FPS Boost")
+    local colors = Theme:addSection("Colors")
+    
+    section7:addKeybind("Toggle Keybind", Enum.KeyCode.LeftControl, function()
+    venyx:toggle()
+        end, function()
+    end)
+    
+    for theme, color in pairs(themes) do
+            colors:addColorPicker(theme, color, function(color3)
+            venyx:setTheme(theme, color3)
         end)
     end
-end)
-
+    
+    -- Load
+    venyx:SelectPage(venyx.pages[1], true)
 
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
