@@ -370,203 +370,212 @@ if game.PlaceId == 10232731562 then
 
 elseif game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory.Slot1.Visible == true then
     
--- notification 
-
-game.StarterGui:SetCore("SendNotification", {
-    Title = "EZ NOOB HUB"; -- the title (ofc)
-    Text = "Script Executed"; -- what the text says (ofc)
-    Icon = ""; -- the image if u want. 
-    Duration = 5; -- how long the notification should in secounds
-    })
-
--- selectmap
-
-if getgenv().selectmap == "Namek" then
-    map = 1
-elseif getgenv().selectmap == "Yaiba" then
-    map = 2
-elseif getgenv().selectmap == "Bleach" then
-    map = 3
-elseif getgenv().selectmap == "Naruto" then
-    map = 4
-elseif getgenv().selectmap == "One Piece" then
-    map = 5      
-end
-
-if getgenv().mapinf == "Regular" then
-    map2 = "Infinite"
-else
-    map2 = "The Sanctuary"
-end
-
--- auto join 
-
-spawn(function()
-    pcall(function()
-        if getgenv().joinstory == true then
-            if game.PlaceId == 11600882147 then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
-                wait(2)
-                game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map)       
-                wait(2)
-                firesignal(game:GetService("Players").LocalPlayer.PlayerGui.TeleportUI.StartButton.MouseButton1Click)
-                wait(getgenv().delay)
-                local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/11600882147/servers/Public?sortOrder=Asc&limit=100"))
-                for i,v in pairs(Servers.data) do
-                    if v.playing ~= v.maxPlayers then
-                        game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
-                    end
-                end
-            end
-        end
-    end)
-end)
-
-spawn(function()
-    pcall(function()
-        if getgenv().joininf == true then
-            if game.PlaceId == 11600882147 then 
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
-                wait(2)
-                game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map2)       
-                wait(2)
-                firesignal(game:GetService("Players").LocalPlayer.PlayerGui.TeleportUI.StartButton.MouseButton1Click)
-                wait(getgenv().delay)
-                local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/11600882147/servers/Public?sortOrder=Asc&limit=100"))
-                for i,v in pairs(Servers.data) do
-                    if v.playing ~= v.maxPlayers then
-                        game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
-                    end
-                end
-            end
-        end
-    end)
-end)
-
--- redeem codes
-
-spawn(function()
-    if getgenv().code == true then
-        game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("10KLIKES")
-        wait(0.5)
-        game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("100KGROUPMEMBERS")
-        wait(0.5)
-        game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("IXCook")
-        wait(0.5)
-        game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("WCKD!")
-    end
-end)
-
-
--- double speed
-
-if getgenv().doublespeed == true then
-    game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory:WaitForChild("Slot1")
-    local virtual_input_manager = game:GetService("VirtualInputManager")
-    local x, y = 80,960
-    virtual_input_manager:SendMouseButtonEvent(x, y, 0, false, game, 0)
-    virtual_input_manager:SendMouseButtonEvent(x, y, 0, true, game, 0)
-end
+    getgenv().joinstory = false
+    getgenv().selectmap = "Yaiba" -- Namek, Yaiba, Bleach, Naruto, One Piece
+    getgenv().joininf   = true
+    getgenv().mapinf =  "Regular" -- Regular, The Sanctuary
+    getgenv().autoplace = true
+    getgenv().code = false
+    getgenv().delay = 30 -- delay to hop to new a server if teleport glitch
+    getgenv().doublespeed = true
     
-
--- get player unit 
-
-function getunit()
-    pcall(function()
-        random = math.random(1,6)
-        slot = random
-        for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do wait()
-            if v.DataCost == 34 then
-                v.Name = "Player"
-                if slot == 1 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot1.Value
-                elseif slot == 2 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot2.Value
-                elseif slot == 3 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot3.Value
-                elseif slot == 4 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot4.Value
-                elseif slot == 5 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot5.Value
-                elseif slot == 6 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot6.Value
+    -- notification 
+    
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "EZ NOOB HUB"; -- the title (ofc)
+        Text = "Script Executed"; -- what the text says (ofc)
+        Icon = ""; -- the image if u want. 
+        Duration = 5; -- how long the notification should in secounds
+        })
+    
+    -- selectmap
+    
+    if getgenv().selectmap == "Namek" then
+        map = 1
+    elseif getgenv().selectmap == "Yaiba" then
+        map = 2
+    elseif getgenv().selectmap == "Bleach" then
+        map = 3
+    elseif getgenv().selectmap == "Naruto" then
+        map = 4
+    elseif getgenv().selectmap == "One Piece" then
+        map = 5      
+    end
+    
+    if getgenv().mapinf == "Regular" then
+        map2 = "Infinite"
+    else
+        map2 = "The Sanctuary"
+    end
+    
+    -- auto join 
+    
+    spawn(function()
+        pcall(function()
+            if getgenv().joinstory == true then
+                if game.PlaceId == 11600882147 then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
+                    wait(2)
+                    game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map)       
+                    wait(2)
+                    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.TeleportUI.StartButton.MouseButton1Click)
+                    wait(getgenv().delay)
+                    local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/11600882147/servers/Public?sortOrder=Asc&limit=100"))
+                    for i,v in pairs(Servers.data) do
+                        if v.playing ~= v.maxPlayers then
+                            game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
+                        end
+                    end
                 end
             end
-        end
+        end)
     end)
-end
-
--- check if there's money unit
-
-function checkmoneyunit()
-    pcall(function()
-        if unit == "Bellma" or unit == "Pride (Ultra)" then
-            repeat wait()
-                random = math.random(1,6)
-                slot = random
-                if slot == 1 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot1.Value
-                elseif slot == 2 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot2.Value
-                elseif slot == 3 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot3.Value
-                elseif slot == 4 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot4.Value
-                elseif slot == 5 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot5.Value
-                elseif slot == 6 then
-                    unit = game:GetService("ReplicatedStorage").Player.Slot6.Value
+    
+    spawn(function()
+        pcall(function()
+            if getgenv().joininf == true then
+                if game.PlaceId == 11600882147 then 
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
+                    wait(2)
+                    game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map2)       
+                    wait(2)
+                    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.TeleportUI.StartButton.MouseButton1Click)
+                    wait(getgenv().delay)
+                    local Servers = game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/11600882147/servers/Public?sortOrder=Asc&limit=100"))
+                    for i,v in pairs(Servers.data) do
+                        if v.playing ~= v.maxPlayers then
+                            game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, v.id)
+                        end
+                    end
                 end
-            until unit ~= "Bellma" and unit ~= "Pride (Weak)" and unit ~= "Pride (Ultra)"
-        end
-    end)
-end
-
--- place unit
-
-function place()
-    pcall(function()
-        for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
-            if v.ClassName == "Model" then
-                game:GetService("ReplicatedStorage").Remotes.Place:FireServer(v.HumanoidRootPart.CFrame * CFrame.new(0,0,-40),unit,nil) 
-                game.StarterGui:SetCore("SendNotification", {
-                    Title = "EZ NOOB HUB"; -- the title (ofc)
-                    Text = "Placed " ..unit; -- what the text says (ofc)
-                    Icon = ""; -- the image if u want. 
-                    Duration = 5; -- how long the notification should in secounds
-                })
             end
+        end)
+    end)
+    
+    -- redeem codes
+    
+    spawn(function()
+        if getgenv().code == true then
+            game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("10KLIKES")
+            wait(0.5)
+            game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("100KGROUPMEMBERS")
+            wait(0.5)
+            game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("IXCook")
+            wait(0.5)
+            game:GetService("ReplicatedStorage").Remotes.ClaimCode:InvokeServer("WCKD!")
         end
     end)
-end
-
--- play
-
-function play()
-    while getgenv().autoplace == true do wait()
-        pcall(function() 
-            repeat wait()
-            getunit()
-            checkmoneyunit()
-                for i,v in pairs(game:GetService("ReplicatedStorage").Units:GetDescendants()) do
-                    if v.Name == unit then
-                        for i2,v2 in pairs (v:GetChildren()) do
-                            if v2.Name == "Cost" then
-                                for i3,v3 in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
-                                    if v3.ClassName == "Model" then
-                                    place()
+    
+    
+    -- double speed
+    
+    if getgenv().doublespeed == true and game.PlaceId ~= 11600882147 then
+        game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory:WaitForChild("Slot1")
+        local virtual_input_manager = game:GetService("VirtualInputManager")
+        local x, y = 80,960
+        virtual_input_manager:SendMouseButtonEvent(x, y, 0, false, game, 0)
+        virtual_input_manager:SendMouseButtonEvent(x, y, 0, true, game, 0)
+    end
+        
+    
+    -- get player unit 
+    
+    function getunit()
+        pcall(function()
+            random = math.random(1,6)
+            slot = random
+            for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do wait()
+                if v.DataCost == 34 then
+                    v.Name = "Player"
+                    if slot == 1 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot1.Value
+                    elseif slot == 2 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot2.Value
+                    elseif slot == 3 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot3.Value
+                    elseif slot == 4 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot4.Value
+                    elseif slot == 5 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot5.Value
+                    elseif slot == 6 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot6.Value
+                    end
+                end
+            end
+        end)
+    end
+    
+    -- check if there's money unit
+    
+    function checkmoneyunit()
+        pcall(function()
+            if unit == "Bellma" or unit == "Pride (Ultra)" then
+                repeat wait()
+                    random = math.random(1,6)
+                    slot = random
+                    if slot == 1 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot1.Value
+                    elseif slot == 2 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot2.Value
+                    elseif slot == 3 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot3.Value
+                    elseif slot == 4 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot4.Value
+                    elseif slot == 5 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot5.Value
+                    elseif slot == 6 then
+                        unit = game:GetService("ReplicatedStorage").Player.Slot6.Value
+                    end
+                until unit ~= "Bellma" and unit ~= "Pride (Weak)" and unit ~= "Pride (Ultra)"
+            end
+        end)
+    end
+    
+    -- place unit
+    
+    function place()
+        pcall(function()
+            for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
+                if v.ClassName == "Model" then
+                    game:GetService("ReplicatedStorage").Remotes.Place:FireServer(v.HumanoidRootPart.CFrame * CFrame.new(0,0,-40),unit,nil) 
+                    game.StarterGui:SetCore("SendNotification", {
+                        Title = "EZ NOOB HUB"; -- the title (ofc)
+                        Text = "Placed " ..unit; -- what the text says (ofc)
+                        Icon = ""; -- the image if u want. 
+                        Duration = 5; -- how long the notification should in secounds
+                    })
+                end
+            end
+        end)
+    end
+    
+    -- play
+    
+    function play()
+        while getgenv().autoplace == true do wait()
+            pcall(function() 
+                repeat wait()
+                getunit()
+                checkmoneyunit()
+                    for i,v in pairs(game:GetService("ReplicatedStorage").Units:GetDescendants()) do
+                        if v.Name == unit then
+                            for i2,v2 in pairs (v:GetChildren()) do
+                                if v2.Name == "Cost" then
+                                    for i3,v3 in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
+                                        if v3.ClassName == "Model" then
+                                        place()
+                                        end
                                     end
                                 end
                             end
                         end
                     end
-                end
-            until game:GetService("Players").Vixaus.PlayerGui.MainUI.Tokens >= v2.Value and getgenv().autoplace == false
-        end)
+                until game:GetService("Players").Vixaus.PlayerGui.MainUI.Tokens >= v2.Value and getgenv().autoplace == false
+            end)
+        end
     end
-end
-
-play()
+    
+    play()
 
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
