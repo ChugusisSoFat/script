@@ -370,7 +370,7 @@ if game.PlaceId == 10232731562 then
 
 elseif game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory.Slot1.Visible == true then
 
-    getgenv().joinstory = false
+getgenv().joinstory = false
 getgenv().selectmap = "Yaiba" -- Namek, Yaiba, Bleach, Naruto, One Piece
 getgenv().joininf   = true
 getgenv().mapinf =  "Regular" -- Regular, The Sanctuary
