@@ -373,10 +373,10 @@ elseif game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory.Slot1.V
 -- notification 
 
 game.StarterGui:SetCore("SendNotification", {
-    Title = "EZ NOOB HUB"; -- the title (ofc)
-    Text = "Script Executed"; -- what the text says (ofc)
-    Icon = ""; -- the image if u want. 
-    Duration = 5; -- how long the notification should in secounds
+    Title = "EZ NOOB HUB";
+    Text = "Script Executed"; 
+    Icon = ""; 
+    Duration = 5; 
     })
 
 -- selectmap
@@ -393,7 +393,7 @@ elseif getgenv().selectmap == "One Piece" then
     map = 5      
 end
 
-if getgenv().mapinf == "Regular" then
+if getgenv().selectinf == "Regular" then
     map2 = "Infinite"
 else
     map2 = "The Sanctuary"
@@ -403,8 +403,14 @@ end
 
 spawn(function()
     pcall(function()
-        if getgenv().joinstory == true then
+        if getgenv().joinstory == true then wait(2)
             if game.PlaceId == 11600882147 then
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "EZ NOOB HUB";
+                    Text = "Joining Story " ..getgenv().selectmap; 
+                    Icon = ""; 
+                    Duration = 5; 
+                })                
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
                 wait(2)
                 game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map)       
@@ -424,8 +430,14 @@ end)
 
 spawn(function()
     pcall(function()
-        if getgenv().joininf == true then
+        if getgenv().joininf == true then wait(2)
             if game.PlaceId == 11600882147 then 
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "EZ NOOB HUB";
+                    Text = "Joining Inf " ..getgenv().selectinf; 
+                    Icon = ""; 
+                    Duration = 5; 
+                })         
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(15326.5479, -50.1157227, 2248.34619, 0, 0, 1, 1, 0, 0, 0, 1, 0)
                 wait(2)
                 game:GetService("ReplicatedStorage").Remotes.ChangeText:FireServer(workspace.Teleporters.Any,map2)       
@@ -458,31 +470,29 @@ spawn(function()
 end)
 
 
--- double speed
+-- gamespeed
 
-if getgenv().doublespeed == true and game.PlaceId ~= 11600882147 then
+if getgenv().gamespeed == 2 and game.PlaceId ~= 11600882147 then
     game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory:WaitForChild("Slot1")
     local virtual_input_manager = game:GetService("VirtualInputManager")
     local x, y = 80,960
     virtual_input_manager:SendMouseButtonEvent(x, y, 0, false, game, 0)
     virtual_input_manager:SendMouseButtonEvent(x, y, 0, true, game, 0)
-end
-
--- triple speed
-if getgenv().triplespeed == true and game.PlaceId ~= 11600882147 then
+elseif getgenv().gamespeed == 3 and game.PlaceId ~= 11600882147 then
     game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Inventory:WaitForChild("Slot1")
     local virtual_input_manager = game:GetService("VirtualInputManager")
     local x, y = 80,850
     virtual_input_manager:SendMouseButtonEvent(x, y, 0, false, game, 0)
     virtual_input_manager:SendMouseButtonEvent(x, y, 0, true, game, 0)
+else
 end
 
--- get player unit 
+-- random player unit
 
 function getunit()
     pcall(function()
-        random = math.random(1,6)
-        slot = random
+        local random = math.random(1,6)
+        local slot = random
         for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do wait()
             if v.DataCost == 34 then
                 v.Name = "Player"
@@ -504,14 +514,13 @@ function getunit()
     end)
 end
 
--- check if there's money unit
+-- check if there are money unit
 
 function checkmoneyunit()
     pcall(function()
         if unit == "Bellma" or unit == "Pride (Ultra)" then
             repeat wait()
-                random = math.random(1,6)
-                slot = random
+                getunit()
                 if slot == 1 then
                     unit = game:GetService("ReplicatedStorage").Player.Slot1.Value
                 elseif slot == 2 then
@@ -530,19 +539,28 @@ function checkmoneyunit()
     end)
 end
 
--- place unit
+-- place
 
 function place()
     pcall(function()
-        for i,v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
-            if v.ClassName == "Model" then
-                game:GetService("ReplicatedStorage").Remotes.Place:FireServer(v.HumanoidRootPart.CFrame * CFrame.new(0,0,-40),unit,nil) 
-                game.StarterGui:SetCore("SendNotification", {
-                    Title = "EZ NOOB HUB"; -- the title (ofc)
-                    Text = "Placed " ..unit; -- what the text says (ofc)
-                    Icon = ""; -- the image if u want. 
-                    Duration = 5; -- how long the notification should in secounds
-                })
+        for i, v in pairs(game:GetService("ReplicatedStorage").Units:GetChildren()) do
+            if v.Name == unit then
+                local token = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Tokens.Text
+                local token2 = string.gsub(token, "%$", "")
+                local token3 = tonumber(token2)
+                if token3 >= v.Cost.Value then
+                    for i2,v2 in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
+                        if v2.ClassName == "Model" then
+                            game:GetService("ReplicatedStorage").Remotes.Place:FireServer(v2.HumanoidRootPart.CFrame * CFrame.new(0,0,-40),unit,nil) 
+                            game.StarterGui:SetCore("SendNotification", {
+                                Title = "EZ NOOB HUB";
+                                Text = "Placed " ..unit; 
+                                Icon = ""; 
+                                Duration = 5;
+                            })
+                        end
+                    end
+                end
             end
         end
     end)
@@ -550,31 +568,11 @@ end
 
 -- play
 
-function play()
-    while getgenv().autoplace == true do wait()
-        pcall(function() 
-            repeat wait()
-            getunit()
-            checkmoneyunit()
-                for i,v in pairs(game:GetService("ReplicatedStorage").Units:GetDescendants()) do
-                    if v.Name == unit then
-                        for i2,v2 in pairs (v:GetChildren()) do
-                            if v2.Name == "Cost" then
-                                for i3,v3 in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do wait()
-                                    if v3.ClassName == "Model" then
-                                    place()
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            until game:GetService("Players").Vixaus.PlayerGui.MainUI.Tokens >= v2.Value and getgenv().autoplace == false
-        end)
-    end
+while getgenv().autoplace == true do wait()
+    getunit()
+    checkmoneyunit() 
+    place()
 end
-
-play()
 
 else
     game.Players.LocalPlayer:Kick("This Game is not support")
