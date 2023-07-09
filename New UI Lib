@@ -217,7 +217,6 @@ local ThemeManager = {} do
 		self:CreateThemeManager(groupbox)
 	end
 
-	ThemeManager:BuildFolderTree()
 end
 
 return ThemeManager
