@@ -1,11 +1,11 @@
 local httpService = game:GetService('HttpService')
 local ThemeManager = {} do
-	ThemeManager.Folder = 'LinoriaLibSettings'
+	ThemeManager.Folder = 'EZ NOOB HUB'
 	-- if not isfolder(ThemeManager.Folder) then makefolder(ThemeManager.Folder) end
 
 	ThemeManager.Library = nil
 	ThemeManager.BuiltInThemes = {
-		['Default'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"0055ff","BackgroundColor":"141414","OutlineColor":"323232"}') },
+		['EZ NOOB HUB'] 	= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"ff6300","BackgroundColor":"141414","OutlineColor":"4d3f2c"}') },
 		['BBot'] 			= { 2, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1e1e1e","AccentColor":"7e48a3","BackgroundColor":"232323","OutlineColor":"141414"}') },
 		['Fatality']		= { 3, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1e1842","AccentColor":"c50754","BackgroundColor":"191335","OutlineColor":"3c355d"}') },
 		['Jester'] 			= { 4, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"db4467","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
@@ -49,7 +49,7 @@ local ThemeManager = {} do
 	end
 
 	function ThemeManager:LoadDefault()		
-		local theme = 'Default'
+		local theme = 'EZ NOOB HUB'
 		local content = isfile(self.Folder .. '/themes/default.txt') and readfile(self.Folder .. '/themes/default.txt')
 
 		local isDefault = true
@@ -201,33 +201,6 @@ local ThemeManager = {} do
 		self.Library = lib
 	end
 
-	function ThemeManager:BuildFolderTree()
-		local paths = {}
-
-		-- build the entire tree if a path is like some-hub/phantom-forces
-		-- makefolder builds the entire tree on Synapse X but not other exploits
-
-		local parts = self.Folder:split('/')
-		for idx = 1, #parts do
-			paths[#paths + 1] = table.concat(parts, '/', 1, idx)
-		end
-
-		table.insert(paths, self.Folder .. '/themes')
-		table.insert(paths, self.Folder .. '/settings')
-
-		for i = 1, #paths do
-			local str = paths[i]
-			if not isfolder(str) then
-				makefolder(str)
-			end
-		end
-	end
-
-	function ThemeManager:SetFolder(folder)
-		self.Folder = folder
-		self:BuildFolderTree()
-	end
-
 	function ThemeManager:CreateGroupBox(tab)
 		assert(self.Library, 'Must set ThemeManager.Library first!')
 		return tab:AddLeftGroupbox('Themes')
@@ -244,7 +217,6 @@ local ThemeManager = {} do
 		self:CreateThemeManager(groupbox)
 	end
 
-	ThemeManager:BuildFolderTree()
 end
 
 return ThemeManager
