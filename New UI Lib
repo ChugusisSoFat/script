@@ -201,33 +201,6 @@ local ThemeManager = {} do
 		self.Library = lib
 	end
 
-	function ThemeManager:BuildFolderTree()
-		local paths = {}
-
-		-- build the entire tree if a path is like some-hub/phantom-forces
-		-- makefolder builds the entire tree on Synapse X but not other exploits
-
-		local parts = self.Folder:split('/')
-		for idx = 1, #parts do
-			paths[#paths + 1] = table.concat(parts, '/', 1, idx)
-		end
-
-		table.insert(paths, self.Folder .. '/themes')
-		table.insert(paths, self.Folder .. '/settings')
-
-		for i = 1, #paths do
-			local str = paths[i]
-			if not isfolder(str) then
-				makefolder(str)
-			end
-		end
-	end
-
-	function ThemeManager:SetFolder(folder)
-		self.Folder = folder
-		self:BuildFolderTree()
-	end
-
 	function ThemeManager:CreateGroupBox(tab)
 		assert(self.Library, 'Must set ThemeManager.Library first!')
 		return tab:AddLeftGroupbox('Themes')
