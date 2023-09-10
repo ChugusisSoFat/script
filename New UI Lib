@@ -213,7 +213,6 @@ local ThemeManager = {} do
 		end
 
 		table.insert(paths, 'EZ NOOB HUB/themes')
-		table.insert(paths, 'EZ NOOB HUB/settings')
 
 		for i = 1, #paths do
 			local str = paths[i]
