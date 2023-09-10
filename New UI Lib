@@ -50,7 +50,7 @@ local ThemeManager = {} do
 
 	function ThemeManager:LoadDefault()		
 		local theme = 'Default'
-		local content = isfile('EZ NOOB HUB/themes/default.txt') and readfile('EZ NOOB HUB/themes/default.txt')
+		local content = isfile('EZ NOOB HUB/Theme Setting/default.txt') and readfile('EZ NOOB HUB/Theme Setting/default.txt')
 
 		local isDefault = true
 		if content then
@@ -72,7 +72,7 @@ local ThemeManager = {} do
 	end
 
 	function ThemeManager:SaveDefault(theme)
-		writefile('EZ NOOB HUB/themes/default.txt', theme)
+		writefile('EZ NOOB HUB/Theme Setting/default.txt', theme)
 	end
 
 	function ThemeManager:CreateThemeManager(groupbox)
@@ -141,7 +141,7 @@ local ThemeManager = {} do
 	end
 
 	function ThemeManager:GetCustomTheme(file)
-		local path = 'EZ NOOB HUB/themes/' .. file
+		local path = 'EZ NOOB HUB/Theme Setting/' .. file
 		if not isfile(path) then
 			return nil
 		end
@@ -168,11 +168,11 @@ local ThemeManager = {} do
 			theme[field] = Options[field].Value:ToHex()
 		end
 
-		writefile('EZ NOOB HUB/themes/' .. file .. '.json', httpService:JSONEncode(theme))
+		writefile('EZ NOOB HUB/Theme Setting/' .. file .. '.json', httpService:JSONEncode(theme))
 	end
 
 	function ThemeManager:ReloadCustomThemes()
-		local list = listfiles('EZ NOOB HUB/themes')
+		local list = listfiles('EZ NOOB HUB/Theme Setting')
 
 		local out = {}
 		for i = 1, #list do
@@ -212,7 +212,7 @@ local ThemeManager = {} do
 			paths[#paths + 1] = table.concat(parts, '/', 1, idx)
 		end
 
-		table.insert(paths, 'EZ NOOB HUB/themes')
+		table.insert(paths, 'EZ NOOB HUB/Theme Setting')
 
 		for i = 1, #paths do
 			local str = paths[i]
