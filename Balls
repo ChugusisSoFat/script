@@ -2,6 +2,26 @@
 local executor = (syn and "Syanpse") or (Valyse and "Valyse") or (IsElectron and "Electron") or (Fluxus and "Fluxus") or (KRNL_LOADED and "Krnl")
 
 if executor then
+    -- // Over All Variables
+    local gname = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    local player = game.Players.LocalPlayer.Character
+    local mouse = game.Players.LocalPlayer:GetMouse()
+    local name = game.Players.LocalPlayer.Name
+    local vir = game:GetService("VirtualInputManager")
+    local HttpServ = game:GetService("HttpService")
+    -- // Auto Farm Variables
+    local mycar = {}
+    -- // Auto Race Variables
+    local map = {"Highway", "Drag", "Circuit", "SofiaBay", "Drawbridge","CrossCountry"}
+    local current_map = nil
+    local current_map_pos = nil
+    -- // ESP Variables
+    local espname = {}
+    local selectplayer = {}
+    local espcar = {}
+    local selectcar = {}
+
+    -- // Auto Save
     function AutoSave()
         if isfolder("Ligma Balls Hub/Cheese Burger") then
             if isfile("Ligma Balls Hub/Cheese Burger/"..name.." Config.json") then
@@ -509,7 +529,7 @@ if executor then
 
     -- // Create Tabs
     local Window = Library:CreateWindow({
-        Title = 'Ligma Balls Hub - ' ..gname,
+        Title = 'EZ NOOB HUB - ' ..gname,
         Center = true,
         AutoShow = false,
         TabPadding = 8,
@@ -522,7 +542,7 @@ if executor then
     }
 
     -- // Welcome
-    Library:Notify('Welcome To Ligma Balls Hub', 4)
+    Library:Notify('Welcome To EZ NOOB HUB', 4)
 
     -- // Notify Error
     ScriptContext = game:GetService("ScriptContext")
@@ -794,7 +814,7 @@ if executor then
             ["content"] = "",
             ["embeds"] = {
                 {
-                    ["title"] = ":fire: Ligma Balls Hub - "..gname,
+                    ["title"] = ":fire: EZ NOOB HUB - "..gname,
                     ["description"] = ":eyes: **Username** : ".."||"..name.."||".."\n\n:moneybag: **MONEY** : "..game:GetService("Players").LocalPlayer.PlayerGui.MainHUD.SideHUD.Bottom.Money.Money.Text 
                     .."\n\n:red_car:  **Player's Vehicles** : "..getcar(),
                     ["color"] = tonumber(4477042),
@@ -1154,7 +1174,7 @@ if executor then
 
     -- // WaterMark
     Library:SetWatermarkVisibility(true)
-    Library:SetWatermark('\u{26A0} Ligma Balls Hub - RIGHTCONTROL/LEFTCONTROL TO TOGGLE THE GUI')
+    Library:SetWatermark('\u{26A0} EZ NOOB HUB - RIGHTCONTROL/LEFTCONTROL TO TOGGLE THE GUI')
     Library:OnUnload(function()
         Library.Unloaded = true
     end)
