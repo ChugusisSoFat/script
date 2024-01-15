@@ -1,11 +1,11 @@
 local httpService = game:GetService('HttpService')
 local ThemeManager = {} do
-	ThemeManager.Folder = 'EZ NOOB HUB'
+	ThemeManager.Folder = 'Ligma Balls Hub'
 	-- if not isfolder(ThemeManager.Folder) then makefolder(ThemeManager.Folder) end
 
 	ThemeManager.Library = nil
 	ThemeManager.BuiltInThemes = {
-		['EZ NOOB HUB / Default'] 	= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"445072","BackgroundColor":"141414","OutlineColor":"000000"}') },
+		['Ligma Balls Hub / Default'] 	= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1c1c1c","AccentColor":"445072","BackgroundColor":"141414","OutlineColor":"000000"}') },
 		['BBot'] 			= { 2, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1e1e1e","AccentColor":"7e48a3","BackgroundColor":"232323","OutlineColor":"141414"}') },
 		['Fatality']		= { 3, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1e1842","AccentColor":"c50754","BackgroundColor":"191335","OutlineColor":"3c355d"}') },
 		['Jester'] 			= { 4, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"242424","AccentColor":"db4467","BackgroundColor":"1c1c1c","OutlineColor":"373737"}') },
@@ -50,7 +50,7 @@ local ThemeManager = {} do
 
 	function ThemeManager:LoadDefault()		
 		local theme = 'Default'
-		local content = isfile('EZ NOOB HUB/Theme Setting/default.txt') and readfile('EZ NOOB HUB/Theme Setting/default.txt')
+		local content = isfile('Ligma Balls Hub/Theme Setting/default.txt') and readfile('Ligma Balls Hub/Theme Setting/default.txt')
 
 		local isDefault = true
 		if content then
@@ -72,7 +72,7 @@ local ThemeManager = {} do
 	end
 
 	function ThemeManager:SaveDefault(theme)
-		writefile('EZ NOOB HUB/Theme Setting/default.txt', theme)
+		writefile('Ligma Balls Hub/Theme Setting/default.txt', theme)
 	end
 
 	function ThemeManager:CreateThemeManager(groupbox)
@@ -141,7 +141,7 @@ local ThemeManager = {} do
 	end
 
 	function ThemeManager:GetCustomTheme(file)
-		local path = 'EZ NOOB HUB/Theme Setting/' .. file
+		local path = 'Ligma Balls Hub/Theme Setting/' .. file
 		if not isfile(path) then
 			return nil
 		end
@@ -168,11 +168,11 @@ local ThemeManager = {} do
 			theme[field] = Options[field].Value:ToHex()
 		end
 
-		writefile('EZ NOOB HUB/Theme Setting/' .. file .. '.json', httpService:JSONEncode(theme))
+		writefile('Ligma Balls Hub/Theme Setting/' .. file .. '.json', httpService:JSONEncode(theme))
 	end
 
 	function ThemeManager:ReloadCustomThemes()
-		local list = listfiles('EZ NOOB HUB/Theme Setting')
+		local list = listfiles('Ligma Balls Hub/Theme Setting')
 
 		local out = {}
 		for i = 1, #list do
@@ -212,7 +212,7 @@ local ThemeManager = {} do
 			paths[#paths + 1] = table.concat(parts, '/', 1, idx)
 		end
 
-		table.insert(paths, 'EZ NOOB HUB/Theme Setting')
+		table.insert(paths, 'Ligma Balls Hub/Theme Setting')
 
 		for i = 1, #paths do
 			local str = paths[i]
