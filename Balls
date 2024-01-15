@@ -621,6 +621,25 @@ if executor then
         end
     })
 
+    -- // Speed Multiplier
+    TabAutoFarm:AddSlider('MySlider', {
+        Text = 'Speed For AutoFarm',
+        Default = SaveSetting["AutoFarmSpeed"],
+        Min = 1,
+        Max = 1000,
+        Rounding = 0,
+        Compact = false,
+        Callback = function(Value)
+            cal = SaveSetting["AutoFarmSpeed"]
+            cal1 = (cal/1.85)  - (cal/1.5)
+            mul =  cal + cal1
+            SaveSetting["AutoFarm Speed"] = Value
+            while not AutoSave() do task.wait()
+                AutoSave()
+            end
+        end
+    })
+
     -- // Auto Race
     local TabAutoFarm1 = GroupAutoFarm:AddTab('Auto Race')
     AutoRace = TabAutoFarm1:AddToggle('TabToggle', { 
