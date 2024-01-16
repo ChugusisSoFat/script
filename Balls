@@ -523,9 +523,8 @@ if executor then
     end
 
     -- Load UI Lib
-    local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
-    local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
-    local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChugusisSoFat/EZ-NOOB-HUB/main/New%20UI%20Lib'))()
+    local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChugusisSoFat/Ligma/main/Linoria%20UI'))()
+    local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChugusisSoFat/Ligma/main/Linoria%20Theme'))()
 
     -- // Create Tabs
     local Window = Library:CreateWindow({
