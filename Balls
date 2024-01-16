@@ -20,6 +20,8 @@ if executor then
     local selectplayer = {}
     local espcar = {}
     local selectcar = {}
+    -- // Gui Size Variables
+    local sizetable = {"Portrait", "Landscape"}
 
     -- // Auto Save
     function AutoSave()
@@ -71,7 +73,8 @@ if executor then
                 ["CarTP"] = false,
                 ["PlayerTP"] = false,
                 ["Render"] = false,
-                ["RenderKeybind"] = "K"
+                ["RenderKeybind"] = "K",
+                ["GuiSize"] = "Portrait"
             }
             writefile("Ligma Balls Hub/Cheese Burger/"..name.." Config.json", HttpServ:JSONEncode(SaveSetting))
             return true
@@ -470,6 +473,23 @@ if executor then
                 enabled = false
             end
         end)
+    end
+
+    -- // Gui Size
+    function guisize()
+        if SaveSetting["GuiSize"] == "Portrait" then
+            sizex = 600
+            sizey = 600
+        else
+            sizex = 900
+            sizey = 560
+        end
+
+        for i,v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
+            if i == 4 then
+                v.Size = UDim2.new(0, sizex, 0, sizey)
+            end
+        end
     end
 
     -- // Click Play Button
@@ -1173,7 +1193,7 @@ if executor then
 
     -- // WaterMark
     Library:SetWatermarkVisibility(true)
-    Library:SetWatermark('\u{26A0} Ligma Balls Hub - RIGHTCONTROL/LEFTCONTROL TO TOGGLE THE GUI')
+    Library:SetWatermark('\u{26A0} Ligma Balls Hub - Press To Toggle GUI')
     Library:OnUnload(function()
         Library.Unloaded = true
     end)
@@ -1184,9 +1204,25 @@ if executor then
     MenuGroup:AddLabel('Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'LeftControl', NoUI = true, Text = 'Menu keybind' })
     Library.ToggleKeybind = Options.MenuKeybind
 
-    -- // UI Settings
+    -- // Gui Settings
     ThemeManager:SetLibrary(Library)
     ThemeManager:ApplyToTab(Tabs.Setting)
+
+    -- // Gui Size
+    local GuiSize = Tabs.Setting:AddRightGroupbox('Select Gui Size')
+    GuiSize:AddDropdown('Select GUI Size', {
+        Values = sizetable,
+        Default = SaveSetting["GuiSize"],
+        Multi = false,
+        Text = '',
+        Callback = function(Value)
+            SaveSetting["GuiSize"] = Value
+            guisize()
+            while not AutoSave() do task.wait()
+                AutoSave()
+            end
+        end
+    })
 
     -- // Start Conifg
     for i,v in pairs(SaveSetting) do
@@ -1207,6 +1243,8 @@ if executor then
                 PlayerTP:SetValue(true)
             elseif i == "Render" then
                 Render:SetValue(true)
+            elseif i == "GuiSize" then
+                guisize()
             end
         end
     end
