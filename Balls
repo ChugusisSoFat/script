@@ -1243,7 +1243,8 @@ if executor then
                 PlayerTP:SetValue(true)
             elseif i == "Render" then
                 Render:SetValue(true)
-            elseif i == "GuiSize" then task.wait(1)
+            elseif i == "GuiSize" then
+                game:GetService("CoreGui"):WaitForChild("ScreenGui")
                 guisize()
             end
         end
