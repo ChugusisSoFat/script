@@ -1217,19 +1217,7 @@ if executor then
         Text = '',
         Callback = function(Value)
             SaveSetting["GuiSize"] = Value
-            if SaveSetting["GuiSize"] == "Portrait" then
-                sizex = 600
-                sizey = 600
-            else
-                sizex = 900
-                sizey = 560
-            end
-    
-            for i,v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
-                if i == 4 then
-                    v.Size = UDim2.new(0, sizex, 0, sizey)
-                end
-            end
+            guisize()
             while not AutoSave() do task.wait()
                 AutoSave()
             end
@@ -1237,7 +1225,6 @@ if executor then
     })
 
     -- // Start Conifg
-    game:GetService("CoreGui"):WaitForChild("ScreenGui")
     for i,v in pairs(SaveSetting) do
         if v == true then
             if i == "AutoFarm" then
@@ -1257,19 +1244,9 @@ if executor then
             elseif i == "Render" then
                 Render:SetValue(true)
             elseif i == "GuiSize" then
-                if SaveSetting["GuiSize"] == "Portrait" then
-                    sizex = 600
-                    sizey = 600
-                else
-                    sizex = 900
-                    sizey = 560
-                end
-        
-                for i,v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
-                    if i == 4 then
-                        v.Size = UDim2.new(0, sizex, 0, sizey)
-                    end
-                end
+                print("1")
+                guisize()
+                print("2")
             end
         end
     end
