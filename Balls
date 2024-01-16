@@ -1225,7 +1225,7 @@ if executor then
     })
 
     -- // Start Conifg
-    game:GetService("CoreGui"):WaitForChild("ScreenGui")
+    task.wait(5)
     for i,v in pairs(SaveSetting) do
         if v == true then
             if i == "AutoFarm" then
