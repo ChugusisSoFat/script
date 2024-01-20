@@ -7,7 +7,6 @@ local vir = game:GetService("VirtualInputManager")
 local HttpServ = game:GetService("HttpService")
 -- // Auto Farm Variables
 local mycar = {}
-mul = 437
 -- // Auto Race Variables
 local map = {"Highway", "Drag", "Circuit", "SofiaBay", "Drawbridge","CrossCountry"}
 local current_map = nil
@@ -90,6 +89,9 @@ end
 function autofarm()
     reopen = tick()
     t = tick()
+    cal = SaveSetting["AutoFarmSpeed"]
+    cal1 = (cal/1.85)  - (cal/1.5)
+    mul =  cal + cal1
     if SaveSetting["AutoFarmCar"] ~= "Select Your Car" then
         if SaveSetting["AutoFarm"] then
             Library:Notify('AutoFarm Is Now Enabled', 2)
