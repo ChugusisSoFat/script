@@ -1221,9 +1221,6 @@ GuiSize:AddDropdown('Select GUI Size', {
 
 -- // Start Conifg
 for i,v in pairs(SaveSetting) do
-    if i == SaveSetting["GuiSize"] then
-        guisize()
-    end
     if v == true then
         if i == "AutoFarm" then
             AutoFarm:SetValue(true)
@@ -1242,6 +1239,9 @@ for i,v in pairs(SaveSetting) do
         elseif i == "Render" then
             Render:SetValue(true)
         end
+    end
+    if i == "GuiSize" then
+        guisize()
     end
 end
 
