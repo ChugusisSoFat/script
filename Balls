@@ -1078,7 +1078,7 @@ Options.PlayerRefresh:OnChanged(function()
             end
         else 
             pcall(function()
-                v.Gui:Destroy()
+                v.Head.Gui:Destroy()
                 v.Highlight:Destroy()
             end)
         end
