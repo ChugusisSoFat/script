@@ -7,6 +7,7 @@ local vir = game:GetService("VirtualInputManager")
 local HttpServ = game:GetService("HttpService")
 -- // Auto Farm Variables
 local mycar = {}
+mul = 437
 -- // Auto Race Variables
 local map = {"Highway", "Drag", "Circuit", "SofiaBay", "Drawbridge","CrossCountry"}
 local current_map = nil
