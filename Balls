@@ -796,12 +796,10 @@ function getcar()
     return totalcar
 end
 PStat = game:GetService("Players").LocalPlayer.PlayerGui.MainHUD.SideHUD.Bottom.Money.Money
-PExecutor = string.format("\u{2601} Executor : %s", executor)
 User = string.format("\u{1F440} Username : %s", name)
 Money = string.format("\u{1F4B0} Player Money : %s", PStat.Text)
 TTCar = string.format("\u{1F697} Total Vehicles : %s", getcar())
 
-Executor = Stats:AddLabel('\n'..PExecutor, true)
 UserLabel = Stats:AddLabel('\n'..User, true)
 MoneyLabel = Stats:AddLabel('\n'..Money, true)
 TTLabel = Stats:AddLabel('\n'..TTCar, true)
