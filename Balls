@@ -281,7 +281,7 @@ function autorace()
                                                     current_map_pos = nil
                                                     isfinish = true
                                                     if race_end then
-                                                        webhook(discurl)
+                                                        webhook()
                                                     end
                                                     for i = 1,2 do
                                                         local x = game:GetService("Players").LocalPlayer.PlayerGui.MainHUD.RaceEndNew.Exit.AbsolutePosition.x + 19
@@ -837,7 +837,7 @@ function webhook(discurl)
                 ["color"] = tonumber(4477042),
                 ["timestamp"] = time,
                 ["image"] = {
-                url = "https://cdn.discordapp.com/attachments/893440039911034890/1123599665259102298/latest.png"
+                url = "https://images6.alphacoders.com/133/1338290.png"
                 }
             }
         }
