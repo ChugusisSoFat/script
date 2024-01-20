@@ -1012,8 +1012,8 @@ ESPPlayer:AddLabel('ESP Color'):AddColorPicker('ColorPicker', {
 })
 Options.ColorPicker:OnChanged(function()
     for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-        if v:FindFirstChild("Gui") and v:FindFirstChild("Highlight") then
-                v.Highlight.FillColor = ESPColor1
+        if v:FindFirstChild("Highlight") then
+            v.Highlight.FillColor = ESPColor1
         end
     end
 end)
@@ -1108,8 +1108,8 @@ ESPCar:AddLabel('ESP Color'):AddColorPicker('ColorPicker', {
 })
 Options.ColorPicker:OnChanged(function()
     for i,v in pairs(game:GetService("Workspace").Vehicles:GetChildren()) do
-        if v:FindFirstChild("Gui") and v:FindFirstChild("Highlight") then
-                v.Highlight.FillColor = ESPColor2   
+        if v:FindFirstChild("Highlight") then
+            v.Highlight.FillColor = ESPColor2   
         end
     end
 end)
