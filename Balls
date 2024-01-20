@@ -475,11 +475,14 @@ end
 function guisize()
     for i,v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
         if i == 4 then
-            if SaveSetting["GuiSize"] == "Portrait" then
-                v.Size = UDim2.new(0, 600, 0, 600)
-            elseif SaveSetting["GuiSize"] == "Landscape" then
-                v.Size = UDim2.new(0, 900, 0, 560)
-            end
+            local old = v.Size
+            repeat
+                if SaveSetting["GuiSize"] == "Portrait" then
+                    v.Size = UDim2.new(0, 600, 0, 600)
+                elseif SaveSetting["GuiSize"] == "Landscape" then
+                    v.Size = UDim2.new(0, 900, 0, 560)
+                end
+            until v.Size ~= old
         end
     end
 end
@@ -1234,9 +1237,7 @@ for i,v in pairs(SaveSetting) do
         elseif i == "Render" then
             Render:SetValue(true)
         elseif i == "GuiSize" then
-            print("1")
             guisize()
-            print("2")
         end
     end
 end
