@@ -1047,7 +1047,7 @@ Options.PlayerRefresh:OnChanged(function()
                 local Highlight = Instance.new("Highlight")
     
                 Gui.Name = "Gui"
-                Gui.Parent = v
+                Gui.Parent = v.Head
                 Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
                 Gui.Active = true
                 Gui.AlwaysOnTop = true
@@ -1061,7 +1061,7 @@ Options.PlayerRefresh:OnChanged(function()
                 Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
                 Text.BorderSizePixel = 0
                 Text.Size = UDim2.new(0, 200, 0, 50)
-                Text.Font = Enum.Font.Unknown
+                Text.Font = Enum.Font.Bangers
                 Text.Text = v.Name
                 Text.TextColor3 = Color3.fromRGB(255, 255, 255)
                 Text.TextScaled = true
@@ -1157,7 +1157,7 @@ Options.CarRefresh:OnChanged(function()
                 Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
                 Text.BorderSizePixel = 0
                 Text.Size = UDim2.new(0, 200, 0, 50)
-                Text.Font = Enum.Font.Unknown
+                Text.Font = Enum.Font.Bangers
                 Text.Text = v.Name.."'s Car"
                 Text.TextColor3 = Color3.fromRGB(255, 255, 255)
                 Text.TextScaled = true
