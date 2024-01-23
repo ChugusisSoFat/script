@@ -1,5 +1,5 @@
 -- // Over All Variables
-local gname = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+loca = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local player = game.Players.LocalPlayer.Character
 local mouse = game.Players.LocalPlayer:GetMouse()
 local vir = game:GetService("VirtualInputManager")
@@ -583,7 +583,7 @@ local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/
 
 -- // Create Tabs
 local Window = Library:CreateWindow({
-    Title = 'Ligma Balls Hub - ' ..gname,
+    Title = 'Ligma Balls Hub - ' ,
     Center = true,
     AutoShow = false,
     TabPadding = 8,
@@ -861,7 +861,7 @@ function webhook(discurl)
         ["content"] = "",
         ["embeds"] = {
             {
-                ["title"] = ":fire: Ligma Balls Hub - "..gname,
+                ["title"] = ":fire: Ligma Balls Hub - Webhook",
                 ["description"] = ":eyes: **Username** : ".."||"..name.."||".."\n\n:moneybag: **MONEY** : "..game:GetService("Players").LocalPlayer.PlayerGui.MainHUD.SideHUD.Bottom.Money.Money.Text 
                 .."\n\n:red_car:  **Player's Car** : "..getcar(),
                 ["color"] = tonumber(4477042),
