@@ -2,9 +2,9 @@
 local gname = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local player = game.Players.LocalPlayer.Character
 local mouse = game.Players.LocalPlayer:GetMouse()
-local name = game.Players.LocalPlayer.Name
 local vir = game:GetService("VirtualInputManager")
 local HttpServ = game:GetService("HttpService")
+local name = game.Players.LocalPlayer.Name
 -- // Auto Farm Variables
 local mycar = {}
 -- // Auto Race Variables
@@ -86,85 +86,70 @@ while not StartFile() do wait()
 end
 
 -- // Function AutoFarm
+local cal = SaveSetting["AutoFarmSpeed"] local cal1 = (cal/1.85) - (cal/1.5) local mul = cal + cal1
+
+function tptostart()
+    repeat task.wait()
+        pcall(function()
+            game.workspace[name].Humanoid:ChangeState(3) task.wait(1)
+            game.workspace[name].PrimaryPart.CFrame = CFrame.new(-34432.3203, 35.0461044, -32710.3379, -0.895207644, 3.02965901e-08, -0.445649296, 5.19329895e-08, 1, -3.63384842e-08, 0.445649296, -5.56743878e-08, -0.895207644) task.wait(0.5)
+            local args = {
+                [1] = "Spawn",
+                [2] = SaveSetting["AutoFarmCar"]
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("VehicleEvent"):FireServer(unpack(args)) task.wait(1)
+        end)
+    until game.workspace[name].Humanoid.Sit == true
+end
+
 function autofarm()
-    reopen = tick()
-    t = tick()
-    cal = SaveSetting["AutoFarmSpeed"]
-    cal1 = (cal/1.85)  - (cal/1.5)
-    mul =  cal + cal1
-    if SaveSetting["AutoFarmCar"] ~= "Select Your Car" then
-        if SaveSetting["AutoFarm"] then
-            Library:Notify('AutoFarm Is Now Enabled', 2)
-            while SaveSetting["AutoFarm"] do task.wait(1)
-                reopendelay = tick() - reopen
-                if reopendelay < 300 then
-                    if not player.Humanoid.Sit then wait(0.5)
-                        player.Humanoid:ChangeState(3) wait(0.5)
-                        workspace[name].PrimaryPart.CFrame = CFrame.new(-34432.3203, 35.0461044, -32710.3379, -0.895207644, 3.02965901e-08, -0.445649296, 5.19329895e-08, 1, -3.63384842e-08, 0.445649296, -5.56743878e-08, -0.895207644) task.wait(1)
-                        workspace[name].PrimaryPart.CFrame = CFrame.new(-34432.3203, 35.0461044, -32710.3379, -0.895207644, 3.02965901e-08, -0.445649296, 5.19329895e-08, 1, -3.63384842e-08, 0.445649296, -5.56743878e-08, -0.895207644) task.wait(1)
-                            local args = {
-                            [1] = "Spawn",
-                            [2] = SaveSetting["AutoFarmCar"]
-                        }
-                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("VehicleEvent"):FireServer(unpack(args)) task.wait(0.5)
-                        workspace.Vehicles[name].Seats.Seat:Destroy()
-                        Library:Notify('Spawned A Car', 2) 
-                    elseif not SaveSetting["AutoFarmCar"] then
-                        Library:Notify('Please Select Your Car', 2)
-                        AutoFarm:SetValue(false)
-                    end
-                    task.spawn(function()
-                        while SaveSetting["AutoFarm"] do wait()
-                            pcall(function()
-                                if SaveSetting["AutoRace"] then 
-                                    for i,v in pairs(game:GetService("Players")[name].PlayerGui.MainHUD.TeleportV2.Foreground.Locations:GetDescendants()) do
-                                        if v.Name == "Amount" then
-                                            if v.Visible == true then
-                                                if v.Parent.Parent.Name == SaveSetting["Map"][1] or SaveSetting["Map"][2] or SaveSetting["Map"][3] or SaveSetting["Map"][4] or SaveSetting["Map"][5] or SaveSetting["Map"][6] then
-                                                    break
-                                                end
-                                            end
+    local t = tick() local reopen = tick()
+        if SaveSetting["AutoFarmCar"] ~= "Select Your Car" then
+            if SaveSetting["AutoFarm"] then
+                Library:Notify('AutoFarm Is Now Enabled', 2)
+                tptostart()
+                while SaveSetting["AutoFarm"] do task.wait(1)
+                    local reopendelay = tick() - reopen
+                    if reopendelay < 300 then   
+                        task.spawn(function()
+                            if not game.workspace[name].Humanoid.Sit then
+                                tptostart()
+                            end
+                        end)
+                        task.spawn(function()
+                            while SaveSetting["AutoFarm"] do wait()
+                                pcall(function()
+                                    for i,v in pairs(game:GetService("Workspace").Vehicles[name]:GetDescendants()) do
+                                        if v.Name == "Wheel" then
+                                            v.Velocity = Vector3.new(mul/2,0,mul)
                                         end
                                     end
-                                end
-                            end)
-                        end
-                    end)
-                    task.spawn(function()
-                        while SaveSetting["AutoFarm"] do wait()
-                            pcall(function()
-                                for i,v in pairs(game:GetService("Workspace").Vehicles[name]:GetDescendants()) do
-                                    if v.Name == "Wheel" then
-                                        v.Velocity = Vector3.new(mul/2,0,mul)
-                                    end
-                                end
-                            end)
-                        end
-                    end)
-                    task.spawn(function()
-                        while SaveSetting["AutoFarm"] do wait()
-                            time = tick() - t
-                            if time > SaveSetting["TPDelay"] then
-                                pcall(function()
-                                    game:GetService("Workspace").Vehicles[name]:SetPrimaryPartCFrame(CFrame.new(-34432.3203, 35.0461044, -32710.3379, -0.895207644, 3.02965901e-08, -0.445649296, 5.19329895e-08, 1, -3.63384842e-08, 0.445649296, -5.56743878e-08, -0.895207644))
                                 end)
-                                t = tick()
                             end
-                        end
-                    end)
-
-                else
-                    AutoFarm:SetValue(false) wait(1) AutoFarm:SetValue(true)
+                        end)
+                        task.spawn(function()
+                            while SaveSetting["AutoFarm"] do wait()
+                                time = tick() - t
+                                if time > SaveSetting["TPDelay"] then
+                                    pcall(function()
+                                        game:GetService("Workspace").Vehicles[name]:SetPrimaryPartCFrame(CFrame.new(-34432.3203, 35.0461044, -32710.3379, -0.895207644, 3.02965901e-08, -0.445649296, 5.19329895e-08, 1, -3.63384842e-08, 0.445649296, -5.56743878e-08, -0.895207644))
+                                    end)
+                                    t = tick()
+                                end
+                            end
+                        end)
+                    else
+                        AutoFarm:SetValue(false) wait(1) AutoFarm:SetValue(true)
+                    end
                 end
+            else
+                Library:Notify('Auto Farm Is Now Disabled', 2)
             end
         else
-            Library:Notify('Auto Farm Is Now Disabled', 2)
+            Library:Notify('Select Your Car', 2)
+            AutoFarm:SetValue(false)
         end
-    elseif SaveSetting["AutoFarm"] then
-        Library:Notify('Select Your Car', 2) wait(0.5)
-        AutoFarm:SetValue(false)
     end
-end
 
 --// Function Auto Race
 function autorace()
@@ -474,6 +459,61 @@ function render()
     end)
 end
 
+-- // Function ESP
+function esp(path, plyorcar, color)
+    for i,v in pairs(path:GetChildren()) do
+        if table.find(plyorcar, v.Name) then 
+            if not v:FindFirstChild("Gui") and not v:FindFirstChild("Highlight") then
+                local Gui = Instance.new("BillboardGui")
+                local Text = Instance.new("TextLabel")
+                local Highlight = Instance.new("Highlight")
+
+                Gui.Name = "Gui"
+                if plyorcar == selectplayer then
+                    Gui.Parent = v.Head
+                else
+                    Gui.Parent = v
+                end
+                Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                Gui.Active = true
+                Gui.AlwaysOnTop = true
+                Gui.LightInfluence = 1.000
+                Gui.Size = UDim2.new(0, 200, 0, 50)
+
+                Text.Name = v.Name
+                Text.Parent = Gui
+                Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                Text.BackgroundTransparency = 1.000
+                Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                Text.Size = UDim2.new(0, 200, 0, 50)
+                Text.Font = Enum.Font.Bangers
+                Text.Text = v.Name.."'s Car"
+                Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+                Text.TextScaled = true
+                Text.TextSize = 16.000
+                Text.TextStrokeTransparency = 0.000
+                Text.TextWrapped = true
+
+                Highlight.Name =  "Highlight"
+                Highlight.Parent = v
+                Highlight.Enabled = true
+                Highlight.FillColor = color
+                Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                Highlight.FillTransparency = 0.35
+            end
+        else 
+            pcall(function()
+                if plyorcar == selectplayer then
+                    v.Head.Gui:Destroy()
+                else
+                    v.Gui:Destroy()
+                end
+                v.Highlight:Destroy()
+            end)
+        end
+    end
+end
+
 -- // Gui Size
 function guisize()
     for i,v in pairs(game:GetService("CoreGui").ScreenGui:GetChildren()) do
@@ -644,10 +684,8 @@ TabAutoFarm:AddSlider('MySlider', {
     Rounding = 0,
     Compact = false,
     Callback = function(Value)
-        cal = SaveSetting["AutoFarmSpeed"]
-        cal1 = (cal/1.85)  - (cal/1.5)
-        mul =  cal + cal1
-        SaveSetting["AutoFarm Speed"] = Value
+    cal = SaveSetting["AutoFarmSpeed"] cal1 = (cal/1.85) - (cal/1.5) mul = cal + cal1
+        SaveSetting["AutoFarmSpeed"] = Value
         while not AutoSave() do task.wait()
             AutoSave()
         end
@@ -1039,50 +1077,7 @@ Options.PlayerRefresh:OnChanged(function()
     for key, value in next, Options.PlayerRefresh.Value do
         table.insert(selectplayer, key)
     end
-    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-        if table.find(selectplayer, v.Name) then 
-            if not v:FindFirstChild("Gui") and not v:FindFirstChild("Highlight") then
-                local Gui = Instance.new("BillboardGui")
-                local Text = Instance.new("TextLabel")
-                local Highlight = Instance.new("Highlight")
-    
-                Gui.Name = "Gui"
-                Gui.Parent = v.Head
-                Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-                Gui.Active = true
-                Gui.AlwaysOnTop = true
-                Gui.LightInfluence = 1.000
-                Gui.Size = UDim2.new(0, 200, 0, 50)
-    
-                Text.Name = v.Name
-                Text.Parent = Gui
-                Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                Text.BackgroundTransparency = 1.000
-                Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                Text.BorderSizePixel = 0
-                Text.Size = UDim2.new(0, 200, 0, 50)
-                Text.Font = Enum.Font.Bangers
-                Text.Text = v.Name
-                Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-                Text.TextScaled = true
-                Text.TextSize = 14.000
-                Text.TextStrokeTransparency = 0.000
-                Text.TextWrapped = true
-    
-                Highlight.Name =  "Highlight"
-                Highlight.Parent = v
-                Highlight.Enabled = true
-                Highlight.FillColor = ESPColor1
-                Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-                Highlight.FillTransparency = 0.35
-            end
-        else 
-            pcall(function()
-                v.Head.Gui:Destroy()
-                v.Highlight:Destroy()
-            end)
-        end
-    end
+    esp(game:GetService("Workspace"), selectplayer, ESPColor1)
 end)
 
 -- // ESP Car
@@ -1135,50 +1130,7 @@ Options.CarRefresh:OnChanged(function()
     for key, value in next, Options.CarRefresh.Value do
         table.insert(selectcar, key)
     end
-    for i,v in pairs(game:GetService("Workspace").Vehicles:GetChildren()) do
-        if table.find(selectcar, v.Name) then 
-            if not v:FindFirstChild("Gui") and not v:FindFirstChild("Highlight") then
-                local Gui = Instance.new("BillboardGui")
-                local Text = Instance.new("TextLabel")
-                local Highlight = Instance.new("Highlight")
-    
-                Gui.Name = "Gui"
-                Gui.Parent = v
-                Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-                Gui.Active = true
-                Gui.AlwaysOnTop = true
-                Gui.LightInfluence = 1.000
-                Gui.Size = UDim2.new(0, 200, 0, 50)
-    
-                Text.Name = v.Name
-                Text.Parent = Gui
-                Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                Text.BackgroundTransparency = 1.000
-                Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                Text.BorderSizePixel = 0
-                Text.Size = UDim2.new(0, 200, 0, 50)
-                Text.Font = Enum.Font.Bangers
-                Text.Text = v.Name.."'s Car"
-                Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-                Text.TextScaled = true
-                Text.TextSize = 14.000
-                Text.TextStrokeTransparency = 0.000
-                Text.TextWrapped = true
-    
-                Highlight.Name =  "Highlight"
-                Highlight.Parent = v
-                Highlight.Enabled = true
-                Highlight.FillColor = ESPColor2
-                Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-                Highlight.FillTransparency = 0.35
-            end
-        else 
-            pcall(function()
-                v.Gui:Destroy()
-                v.Highlight:Destroy()
-            end)
-        end
-    end
+    esp(game:GetService("Workspace").Vehicles, selectcar, ESPColor2)
 end)
 
 -- // WaterMark
