@@ -1,5 +1,5 @@
 -- // Over All Variables
-loca = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local gname = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local player = game.Players.LocalPlayer.Character
 local mouse = game.Players.LocalPlayer:GetMouse()
 local vir = game:GetService("VirtualInputManager")
@@ -861,13 +861,16 @@ function webhook(discurl)
         ["content"] = "",
         ["embeds"] = {
             {
-                ["title"] = ":fire: Ligma Balls Hub - Webhook",
+                ["title"] = gname.." - Webhook",
                 ["description"] = ":eyes: **Username** : ".."||"..name.."||".."\n\n:moneybag: **MONEY** : "..game:GetService("Players").LocalPlayer.PlayerGui.MainHUD.SideHUD.Bottom.Money.Money.Text 
                 .."\n\n:red_car:  **Player's Car** : "..getcar(),
-                ["color"] = tonumber(4477042),
-                ["timestamp"] = time,
+                ["color"] = 4477042,
                 ["image"] = {
                 url = "https://images6.alphacoders.com/133/1338290.png"
+                },
+                ["timestamp"] = time,
+                ["footer"] = {
+                    text = "Ligma Balls Hub"
                 }
             }
         }
