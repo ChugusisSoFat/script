@@ -1,0 +1,109 @@
+local utilities = {
+   gui_objects = {},
+   chat_message_keybind = "k",
+   clipboard_keybind = "p",
+   last_touched = nil
+}
+
+local LocalPlayer = game:GetService("Players").LocalPlayer
+
+if not LocalPlayer then
+   game:GetService("Players").PlayerAdded:Wait()
+end
+
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local CoreGui = game:GetService("CoreGui")
+
+local function is_in_table(object)
+   for i,v in pairs(utilities.gui_objects) do
+       if v == object then
+           return true
+       end    
+   end  
+   return false
+end    
+
+for i,v in pairs(CoreGui:GetDescendants()) do
+   local success = pcall(function()
+       v.BackgroundTransparency = v.BackgroundTransparency
+   end)    
+   if success and not is_in_table(v) then
+       table.insert(utilities.gui_objects,v)
+   end
+end
+for i,v in pairs(PlayerGui:GetDescendants()) do
+   local success = pcall(function()
+       v.BackgroundTransparency = v.BackgroundTransparency
+   end)    
+   if success and not is_in_table(v) then
+       table.insert(utilities.gui_objects,v)
+   end
+end
+
+CoreGui.DescendantAdded:Connect(function(child)
+   local success = pcall(function()
+       child.BackgroundTransparency = child.BackgroundTransparency
+   end)    
+   if success and not is_in_table(child) then
+       child.MouseEnter:Connect(function()
+           utilities.last_touched = child
+       end)  
+   end
+end)
+
+PlayerGui.DescendantAdded:Connect(function(child)
+   local success = pcall(function()
+       child.BackgroundTransparency = child.BackgroundTransparency
+   end)    
+   if success and not is_in_table(child) then
+       child.MouseEnter:Connect(function()
+           utilities.last_touched = child
+       end)    
+   end
+end)
+
+for i,object in pairs(utilities.gui_objects) do
+   object.MouseEnter:Connect(function()
+       utilities.last_touched = object
+   end)    
+end  
+
+local mouse = LocalPlayer:GetMouse()
+
+mouse.KeyDown:Connect(function(key)
+   if key == string.lower(utilities.chat_message_keybind) then
+       if utilities.last_touched then
+           game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "{GUI Path Finder}: game."..utilities.last_touched:GetFullName(),Color = Color3.fromRGB(0, 255, 0),Font = Enum.Font.SourceSansBold, TextSize = 18})
+       end    
+   end
+   if key == string.lower(utilities.clipboard_keybind) then
+       local clipboard = setclipboard
+       if clipboard then
+           local object = utilities.last_touched
+           if object then
+               local path = object:FindFirstAncestorWhichIsA("CoreGui") or object:FindFirstAncestorWhichIsA("Players")
+               local service = string.split(object:GetFullName(),".")
+               local copied_string = "game."..object:GetFullName()
+               if service[2] then
+                   copied_string = 'game:GetService("'..tostring(path)..'").'..service[2].."."
+                   for i = 3,#service do
+                       if string.find(service[i]," ") then
+                           if copied_string:sub(#copied_string,#copied_string) == "." then
+                               copied_string = copied_string:sub(1,#copied_string-1)
+                           end    
+                           copied_string = copied_string..'["'..service[i]..'"]'
+                       else
+                           copied_string = copied_string..service[i]
+                       end
+                       if i < #service then
+                           copied_string = copied_string.."."
+                       end    
+                   end    
+               end    
+               clipboard(copied_string)
+           end
+       else
+           game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "{GUI Path Finder}: Your exploit does not support clipboarding.",Color = Color3.fromRGB(255, 0, 0),Font = Enum.Font.SourceSansBold, TextSize = 18})
+       end
+   end
+end)
