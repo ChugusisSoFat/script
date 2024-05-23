@@ -1,0 +1,373 @@
+-- Ui Variables
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+-- Script Variables
+local postype = "CFrame"
+local mousedelay = 3
+local vir = game:GetService("VirtualInputManager")
+local mousex = nil
+local mousey = nil
+
+local Window = Fluent:CreateWindow({
+    Title = "Scripting Tool",
+    SubTitle = "by verybigfatbelly",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Position", Icon = "home" }),
+    Script_Hub = Window:AddTab({ Title = "Script Hub", Icon = "album" }),
+    Mouse = Window:AddTab({ Title = "Mouse", Icon = "mouse" }),
+    Teleportation = Window:AddTab({ Title = "Teleportation", Icon = "globe" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Positon Type",
+        Values = {"CFrame"},
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:OnChanged(function(Value)
+        postype = Value
+    end)
+
+    Tabs.Main:AddButton({
+        Title = "Coppy Player Position",
+        Description = "Select Position Type First",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            local name = game.Players.LocalPlayer.Name
+                            setclipboard(tostring(game.workspace[name].Head[postype]))
+                            print(tostring(game.workspace[name].Head[postype]))
+                            Fluent:Notify({
+                                Title = "Coppied Player Position To Clipboard",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Script_Hub:AddButton({
+        Title = "Dark Dex",
+        Description = "just a explorer",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+                            Fluent:Notify({
+                                Title = "Executed Dark Dex",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Script_Hub:AddButton({
+        Title = "Simple Spy",
+        Description = "its remote spy :)",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+                            Fluent:Notify({
+                                Title = "Executed Simple Spy",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Script_Hub:AddButton({
+        Title = "Infinite Yield",
+        Description = "probably useful i think",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", true))()
+                            Fluent:Notify({
+                                Title = "Executed Infinite Yield",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Script_Hub:AddButton({
+        Title = "Gui Path Finder",
+        Description = "very useful",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/ChugusisSoFat/script/main/Gui%20Path%20Finder", true))()
+                            Fluent:Notify({
+                                Title = "Executed Gui Path Finder",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    local Inputx = Tabs.Mouse:AddInput("Input", {
+        Title = "Input Mouse Position X",
+        Default = "",
+        Placeholder = "",
+        Numeric = true, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(Value)
+            --
+        end
+    })
+
+    Inputx:OnChanged(function()
+        mousex = Inputx.Value
+    end)
+
+    local Inputy = Tabs.Mouse:AddInput("Input", {
+        Title = "Input Mouse Position Y",
+        Default = "",
+        Placeholder = "",
+        Numeric = true, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(Value)
+            --
+        end
+    })
+
+    Inputy:OnChanged(function()
+        mousey = Inputy.Value
+    end)
+
+    Tabs.Mouse:AddButton({
+        Title = "Debug Mouse Position",
+        Description = "",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            for i = 1,2 do task.wait()
+                                vir:SendMouseButtonEvent(mousex,mousey,0, false, game, 0)
+                                vir:SendMouseButtonEvent(mousex,mousey, 0, true, game, 0)
+                            end
+                            Fluent:Notify({
+                                Title = "Clicked",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = 5 -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    local Slider = Tabs.Mouse:AddSlider("Slider", {
+        Title = "Coppy Delay",
+        Description = "Delay Before Coppy Your Mouse Position",
+        Default = 3,
+        Min = 0,
+        Max = 10,
+        Rounding = 0.1,
+        Callback = function(Value)
+            --
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        mousedelay = Value
+    end)
+
+    Slider:SetValue(3)
+
+    Tabs.Mouse:AddButton({
+        Title = "Coppy Mouse Position",
+        Description = "",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            task.wait(mousedelay)
+                            setclipboard(game.Players.LocalPlayer:GetMouse().x ..",".. game.Players.LocalPlayer:GetMouse().y)
+                            Fluent:Notify({
+                                Title = "Coppied Mouse Position",
+                                Content = "Successfully",
+                                SubContent = "", -- Optional
+                                Duration = mousedelay -- Set to nil to make the notification not disappear
+                            })
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Teleportation:AddButton({
+        Title = "Rejoin Server",
+        Description = "",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are You Sure?",
+                Content = "",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            game:GetService('TeleportService'):Teleport(game.PlaceId, game.Players.LocalPlayer)
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            --
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+end
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
