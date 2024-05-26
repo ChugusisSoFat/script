@@ -3,15 +3,11 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 -- Script Variables
-local service = {
-    vir = game:GetService("VirtualInputManager")
-}
-local var = {
-    postype = "CFrame"
-    mousedelay = 3
-    mousex = nil
-    mousey = nil
-}
+local postype = "CFrame"
+local mousedelay = 3
+local vir = game:GetService("VirtualInputManager")
+local mousex = nil
+local mousey = nil
 
 local Window = Fluent:CreateWindow({
     Title = "Scripting Tool",
@@ -38,13 +34,13 @@ do
 
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Positon Type",
-        Values = {"CFrame"},
+        Values = {"CFrame", "Vector3"},
         Multi = false,
         Default = 1,
     })
 
     Dropdown:OnChanged(function(Value)
-        var.postype = Value
+        postype = Value
     end)
 
     Tabs.Main:AddButton({
@@ -59,8 +55,11 @@ do
                         Title = "Confirm",
                         Callback = function()
                             local name = game.Players.LocalPlayer.Name
-                            setclipboard(tostring(game.workspace[name].Head[postype]))
-                            print(tostring(game.workspace[name].Head[postype]))
+                            if postype == "CFrame" then
+                                setclipboard(tostring(game.workspace[name].Head.CFrame))
+                            elseif postype == "Vector3" then
+                                setclipboard(tostring(game.workspace[name].Head.Position))
+                            end
                             Fluent:Notify({
                                 Title = "Coppied Player Position To Clipboard",
                                 Content = "Successfully",
@@ -211,12 +210,12 @@ do
         Numeric = true, -- Only allows numbers
         Finished = true, -- Only calls callback when you press enter
         Callback = function(Value)
-            --
+            mousex = tonumber(Value)
         end
     })
 
     Inputx:OnChanged(function()
-        var.mousex = Inputx.Value
+        --
     end)
 
     local Inputy = Tabs.Mouse:AddInput("Input", {
@@ -226,12 +225,12 @@ do
         Numeric = true, -- Only allows numbers
         Finished = true, -- Only calls callback when you press enter
         Callback = function(Value)
-            --
+            mousey = tonumber(Value)
         end
     })
 
     Inputy:OnChanged(function()
-        var.mousey = Inputy.Value
+        --
     end)
 
     Tabs.Mouse:AddButton({
@@ -245,9 +244,9 @@ do
                     {
                         Title = "Confirm",
                         Callback = function()
-                            for i = 1,2 do task.wait()
-                                service.vir:SendMouseButtonEvent(var.mousex,var.mousey,0, false, game, 0)
-                                service.vir:SendMouseButtonEvent(var.mousex,var.mousey, 0, true, game, 0)
+                            for i = 1,3 do task.wait()
+                                vir:SendMouseButtonEvent(mousex,mousey,0, false, game, 0)
+                                vir:SendMouseButtonEvent(mousex,mousey, 0, true, game, 0)
                             end
                             Fluent:Notify({
                                 Title = "Clicked",
@@ -281,7 +280,7 @@ do
     })
 
     Slider:OnChanged(function(Value)
-        var.mousedelay = Value
+        mousedelay = Value
     end)
 
     Slider:SetValue(3)
@@ -297,13 +296,13 @@ do
                     {
                         Title = "Confirm",
                         Callback = function()
-                            task.wait(var.mousedelay)
+                            task.wait(mousedelay)
                             setclipboard(game.Players.LocalPlayer:GetMouse().x ..",".. game.Players.LocalPlayer:GetMouse().y)
                             Fluent:Notify({
                                 Title = "Coppied Mouse Position",
                                 Content = "Successfully",
                                 SubContent = "", -- Optional
-                                Duration = var.mousedelay -- Set to nil to make the notification not disappear
+                                Duration = mousedelay -- Set to nil to make the notification not disappear
                             })
                         end
                     },
