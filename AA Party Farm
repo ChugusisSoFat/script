@@ -11,15 +11,41 @@ local storydifficulty = getgenv().SelectMode["Story Difficulty"]
 local infmap = getgenv().SelectMode["Inf Map"]
 local friendonly = getgenv().FriendOnly
 local checkevery = getgenv().CheckDelay
+local stoprendering = getgenv().Disable3dRender
 local currentply = {}
 local currentply2 = {}
 local plyinroom = {}
+local checkhost = {}
 
 -- Game Variable
 local MainLobby = game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"]
 local EventLobby = game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies
+local Ply = game:GetService("Players").LocalPlayer
+local RunService = game:GetService("RunService")
 
 table.insert(memberparty,host)
+function blackscreen()
+    local ScreenGui = Instance.new("ScreenGui")
+    local BlackScreen = Instance.new("Frame")
+    ScreenGui.Parent = Ply.PlayerGui
+    ScreenGui.IgnoreGuiInset = true
+    BlackScreen.Parent = ScreenGui
+    BlackScreen.BackgroundColor3 = Color3.new(0,0,0)
+    BlackScreen.Size = UDim2.new(1,0,1,0)
+end
+if stoprendering then
+    RunService.RenderStepped:Connect(function()
+        if not iswindowactive() then
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
+            blackscreen()
+        elseif Ply.PlayerGui:FindFirstChild("ScreenGui") then
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
+            Ply.PlayerGui.ScreenGui:Destroy()
+        end
+    end)
+end
+
+-- Check Player
 function checkply()
     table.clear(currentply)
     for _,v in pairs(game:GetService("Players"):GetChildren()) do
@@ -34,6 +60,7 @@ function checkply()
     return true
 end
 
+-- Check if there's a player that is not in the party
 function checkunknownply()
     table.clear(currentply2)
     for _,v in pairs(game:GetService("Players"):GetChildren()) do
@@ -50,9 +77,10 @@ function checkunknownply()
     return true
 end
 
+-- Auto Join
 function autojoin()
     repeat task.wait() until checkply()
-    repeat task.wait() until #MainLobby.Players:GetChildren() <= 0 or #EventLobby["_lobbytemplate_event4"].Players:GetChildren() <= 0 or #EventLobby["_lobbytemplate_event3"].Players:GetChildren() <= 0
+    repeat task.wait() until #MainLobby.Players:GetChildren() <= 0 or #EventLobby["_lobbytemplate_event3"].Players:GetChildren() <= 0 or #EventLobby["_lobbytemplate_event4"].Players:GetChildren() <= 0
     if game.Players.LocalPlayer.Name == host then task.wait(1)
 
         -- join lobby
@@ -142,12 +170,25 @@ function autojoin()
 
     else task.wait(3)
     
-    -- check if not event map
-    if selectmode == "Story" or selectmode == "Inf" or selectmode == "Legend Stage" then
-        repeat task.wait() until MainLobby.World.Value == storymap or MainLobby.World.Value == infmap
-    end
+    -- check if host create lobby
+    repeat task.wait()
+    table.clear(checkhost)
+        if selectmode == "Story" or selectmode == "Inf" or selectmode == "Legend Stage" then
+            for _,v in pairs(MainLobby.Players:GetChildren()) do
+                table.insert(checkhost, tostring(v.Value))
+            end
+        elseif selectmode == "Winter Event" then
+            for _,v in pairs(EventLobby["_lobbytemplate_event3"].Players:GetChildren()) do
+                table.insert(checkhost, tostring(v.Value))
+            end
+        elseif selectmode == "Halloween Event" then
+            for _,v in pairs(EventLobby["_lobbytemplate_event4"].Players:GetChildren()) do
+                table.insert(checkhost, tostring(v.Value))
+            end
+        end
+    until table.find(checkhost, host) task.wait(1)
 
-    -- join lobby
+    -- Join Lobby
         if selectmode == "Story" then
             local args = {
                 [1] = "_lobbytemplategreen8"
