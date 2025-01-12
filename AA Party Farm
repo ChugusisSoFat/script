@@ -1,0 +1,177 @@
+local host = getgenv().Host
+local memberparty = getgenv().Memberparty 
+local selectmode = getgenv().SelectMode["Mode"]
+local storymap = getgenv().SelectMode["Story Map"]
+local storyact = getgenv().SelectMode["Story Act"]
+local legendmap = getgenv().SelectMode["Legend Stage Map"]
+local legendact = getgenv().SelectMode["Legend Stage Act"]
+local storydifficulty = getgenv().SelectMode["Story Difficulty"]
+local infmap = getgenv().SelectMode["Inf Map"]
+local friendonly = getgenv().FriendOnly
+local checkevery = getgenv().CheckDelay
+local currentply = {}
+local currentply2 = {}
+local plyinroom = {}
+
+table.insert(memberparty,host)
+function checkply()
+    table.clear(currentply)
+    for _,v in pairs(game:GetService("Players"):GetChildren()) do
+        table.insert(currentply,v.Name)
+    end
+
+    for _,v in pairs(memberparty) do 
+        if not table.find(currentply, v) then
+            return false
+        end
+    end
+    return true
+end
+
+function checkunknownply()
+    table.clear(currentply2)
+    for _,v in pairs(game:GetService("Players"):GetChildren()) do
+        table.insert(currentply2,v.Name)
+    end
+
+    for _,v in pairs(currentply2) do
+        for _,v2 in pairs(memberparty) do
+            if v ~= v2 then
+                return false
+            end
+        end
+    end
+    return true
+end
+
+function autojoin()
+    repeat task.wait() until checkply()
+    if game.Players.LocalPlayer.Name == host then task.wait(3)
+
+        -- join lobby
+        if selectmode == "Story" then
+        local args = {
+            [1] = "_lobbytemplategreen8"
+        }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)
+            -- select map
+            local args = {
+                [1] = "_lobbytemplategreen8",
+                [2] = storymap.."_level_"..storyact,
+                [3] = friendonly,
+                [4] = storydifficulty
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_lock_level"):InvokeServer(unpack(args)) task.wait(3)
+
+        elseif selectmode == "Inf" then
+             -- join lobby
+            local args = {
+                [1] = "_lobbytemplategreen8"
+            }
+                game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)
+            -- select map
+            local args = {
+                [1] = "_lobbytemplategreen8",
+                [2] = infmap.."_infinite",
+                [3] = friendonly,
+                [4] = "Hard"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_lock_level"):InvokeServer(unpack(args)) task.wait(3)
+
+        elseif selectmode == "Legend Stage" then
+            -- join lobby
+            local args = {
+                [1] = "_lobbytemplategreen8"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)
+            -- select map
+            local args = {
+                [1] = "_lobbytemplategreen8",
+                [2] = legendmap.."_legend_"..legendact,
+                [3] = friendonly,
+                [4] = "Hard"
+            }
+            
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_lock_level"):InvokeServer(unpack(args))
+            
+
+        elseif selectmode == "Winter Event" then
+            local args = {
+                [1] = "_lobbytemplate_event3"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)
+        elseif selectmode == "Halloween Event" then
+            local args = {
+                [1] = "_lobbytemplate_event4"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)            
+        end
+
+        -- start
+        if selectmode == "Story" or selectmode == "Inf" or selectmode == "Legend Stage" then
+            function plyroom()
+                table.clear(plyinroom)
+                for _,v in pairs(game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"].Players:GetChildren()) do
+                   table.insert(plyinroom, tostring(v.Value))
+                end
+
+                for _,v in pairs(memberparty) do
+                    if not table.find(plyinroom,v) then
+                        return false
+                    end
+                end
+                -- remote
+                task.wait(3)
+                game:GetService("ReplicatedStorage").endpoints["client_to_server"]["request_start_game"]:InvokeServer("_lobbytemplategreen8")
+                return true
+            end
+            repeat task.wait() until plyroom() or game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"].Timer.Value <= 15
+            -- leave lobby
+            local args = {
+                [1] = "_lobbytemplategreen8"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_leave_lobby"):InvokeServer(unpack(args))
+        end
+
+    else task.wait(3)
+    
+    -- check if not event map
+    if selectmode == "Story" or selectmode == "Inf" or selectmode == "Legend Stage" then
+        repeat task.wait() until game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"].World.Value == storymap or game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"].World.Value == infmap
+    end
+
+    -- join lobby
+        if selectmode == "Story" then
+            local args = {
+                [1] = "_lobbytemplategreen8"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args))
+        elseif selectmode == "Inf" then
+            local args = {
+                [1] = "_lobbytemplategreen8"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args))
+        elseif selectmode == "Winter Event" then
+            local args = {
+                [1] = "_lobbytemplate_event3"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)
+        elseif selectmode == "Halloween Event" then
+            local args = {
+                [1] = "_lobbytemplate_event4"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("endpoints"):WaitForChild("client_to_server"):WaitForChild("request_join_lobby"):InvokeServer(unpack(args)) task.wait(3)            
+        end
+    end
+end
+
+while true do task.wait()
+    if game.PlaceId == 8304191830 then 
+        autojoin()
+    else
+        task.wait(checkevery)
+        if not checkply() or not checkunknownply() then
+            game:GetService("TeleportService"):Teleport(8304191830)
+        end
+    end
+end
