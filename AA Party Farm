@@ -1,3 +1,4 @@
+repeat task.wait() until game:IsLoaded() 
 local host = getgenv().Host
 local memberparty = getgenv().Memberparty 
 local selectmode = getgenv().SelectMode["Mode"]
@@ -46,6 +47,7 @@ end
 
 function autojoin()
     repeat task.wait() until checkply()
+    repeat task.wait() until game:GetService("Workspace")["_LOBBIES"].Story["_lobbytemplategreen8"].Players:GetChildren() <= 0
     if game.Players.LocalPlayer.Name == host then task.wait(3)
 
         -- join lobby
